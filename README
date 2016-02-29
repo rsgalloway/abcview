@@ -1,0 +1,52 @@
+AbcView is a graphical Alembic inspection, visualization and scene assembly
+tool. It offers a number of widgets to help you inspect and visualize your
+Alembic data, and assemble hierarchical scenes.
+
+- Widgets for inspecting Alembic objects
+- Hierarchical scene assembly (IO file format)
+- Deferred loading for all Alembic objects
+- Python console for closer inspection of Alembic objects
+- Playback or step through animation using the Timeline widget
+- Per-camera render modes (box, fill, line, point)
+
+The repo contains both the current PyQt-based AbcView and a work-in-progress
+C++ conversion. The C++ version is much faster, but does not yet support all
+of the same features as the current PyQt version.
+
+More information-
+
+http://docs.alembic.io/python/abcview.html
+
+
+Requirements
+------------
+
+Alembic
+CMake
+ilmbase
+Boost
+zlib
+OpenGL
+Qt4+
+
+For PyQt version:
+
+Python 2.6+
+PyAlembic
+PyAbcOpenGL
+PyOpenGL
+PyQt4+
+argparse
+
+
+Build
+-----
+
+1. cmake [source] [OPTIONS]
+2. if you're building the C++ version, you may beed to recreate the Qt moc
+   files for your platform:
+
+    $ moc MainWindow.h -o MainWindow.moc
+
+3. make
+4. make install
