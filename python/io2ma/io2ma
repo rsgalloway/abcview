@@ -1,0 +1,191 @@
+#! /usr/bin/env python
+#-******************************************************************************
+#
+# Copyright (c) 2016,
+#  Sony Pictures Imageworks Inc. and
+#  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
+#
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+# *       Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+# *       Redistributions in binary form must reproduce the above
+# copyright notice, this list of conditions and the following disclaimer
+# in the documentation and/or other materials provided with the
+# distribution.
+# *       Neither the name of Sony Pictures Imageworks, nor
+# Industrial Light & Magic, nor the names of their contributors may be used
+# to endorse or promote products derived from this software without specific
+# prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#-******************************************************************************
+
+__prog__ = "io2ma"
+__version__ = "1.0.0"
+__author__ = "ryan@rsgalloway.com"
+__doc__ = """
+AbcView session file to Maya file converter.
+
+    $ io2ma in.io out.ma
+
+Requires AbcView 1.0.9+
+"""
+
+import os
+import sys
+import imath
+
+if len(sys.argv) != 3:
+    print __doc__
+    sys.exit(1)
+
+import maya.standalone
+maya.standalone.initialize(name=__prog__)
+import maya.cmds as cmds
+
+cmds.loadPlugin('AbcImport.so')
+#cmds.loadPlugin('AbcExport.so')
+
+from abcview import version_tuple
+from abcview.io import Scene, Session, Camera
+
+major, minor, maint = version_tuple
+if major < 1 or (major==1 and minor==0 and maint < 9):
+    raise Exception("Requires AbcView 1.0.9+")
+
+
+def sanitize(name):
+    """Returns a Maya friendly string.
+    """
+
+    return name.replace(".", "_")
+
+
+def dag_path(item):
+    """Returns the Maya DAG path for an item.
+    """
+
+    parent = item
+    path = ""
+    while parent and parent != item.session:
+        path = "|" + sanitize(parent.name) + path
+        parent = parent.parent
+    return str(path)
+
+
+def load_item(item):
+    """Loads an AbcView session or scene into Maya.
+
+    :param item: abcview.io.Scene or Session class object
+    """
+
+    if not os.path.isfile(item.filepath):
+        print "File does not exists", item.filepath
+        return 0
+
+    name = sanitize(item.name)
+    path = dag_path(item)
+    
+    print "loading", item.type(), path
+
+    cmds.spaceLocator(name=name)#, position=item.translate)
+
+    if item.parent and (item.parent != item.session):
+        try:
+            cmds.parent("|" + name, dag_path(item.parent))
+        except Exception, err:
+            print "error reparenting", path, err
+
+    cmds.addAttr(shortName="ip", longName="instancepath", dt="string")
+    cmds.setAttr("%s.instancepath" % path, item.instancepath(), type="string")
+
+    cmds.addAttr(shortName="at", longName="type", dt="string")
+    cmds.setAttr("%s.type" % path, item.type(), type="string")
+
+    if item.type() == Scene.type():
+        cmds.setAttr("%s.translateX" % path, item.translate[0])
+        cmds.setAttr("%s.translateY" % path, item.translate[1])
+        cmds.setAttr("%s.translateZ" % path, item.translate[2])
+
+        w, x, y, z = item.rotate
+        euclid = w * imath.V3d(x, y, z)
+
+        cmds.setAttr("%s.rotateX" % path, euclid[0])
+        cmds.setAttr("%s.rotateY" % path, euclid[1])
+        cmds.setAttr("%s.rotateZ" % path, euclid[2])
+
+        cmds.setAttr("%s.scaleX" % path, item.scale[0])
+        cmds.setAttr("%s.scaleY" % path, item.scale[1])
+        cmds.setAttr("%s.scaleZ" % path, item.scale[2])
+
+    if item.type() == Scene.type() and item.loaded:
+        cmds.AbcImport(item.filepath, mode="import", reparent=path)
+
+
+def set_range(start, end):
+    """Sets the min and max times.
+    """
+
+    try:
+        cmds.playbackOptions(
+            minTime='%dsec' % start, 
+            maxTime='%dsec' % end
+        )
+    except Exception, err:
+        print "Error setting frame range", err
+
+
+def load(filepath):
+    """Loads an AbcView session or Alembic archive.
+    """
+
+    if filepath.endswith(".io"):
+        s = Session(filepath)
+        set_range(s.min_time, s.max_time)
+
+    elif filepath.endswith(".abc"):
+        return load_scene(Scene(filepath))
+
+    for item in s.walk():
+        if item.type() in (Scene.type(), Session.type()):
+            load_item(item)
+        elif item.type() in (Camera.type()):
+            print "skipping", item, "for now..."
+
+
+def save(filepath):
+    """Saves the maya scene.
+    """
+
+    cmds.file(rename=filepath)
+    _type = "mayaAscii"
+    if outfile.endswith(".mb"):
+        _type = "mayaBinary"
+    cmds.file(save=True, force=True, type=_type)
+
+
+if __name__ == "__main__":
+
+    # load the input session file
+    filepath = sys.argv[1]
+    load(filepath)
+
+    # save the output maya file
+    outfile = sys.argv[2]
+    save(outfile)
+
