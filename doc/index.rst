@@ -15,7 +15,7 @@ data, as well as assemble hierarchical scenes.
     * Per-camera render modes (box, fill, line, point)
     * Widgets are embeddable in other PyQt applications
 
-.. image:: abcview.png
+.. image:: screenshot.png
    :width: 800
    :align: center
 
