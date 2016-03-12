@@ -13,25 +13,9 @@
 
 import sys, os
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath("@PYILMBASE_PYIMATH_MODULE_DIRECTORY@"))
-sys.path.insert(1, os.path.abspath("@PROJECT_BINARY_DIR@/python/PyAlembic"))
-sys.path.insert(2, os.path.abspath("@PROJECT_BINARY_DIR@/python/PyAbcOpenGL"))
-sys.path.insert(3, os.path.abspath("@PROJECT_SOURCE_DIR@/python/examples/cask"))
-sys.path.insert(4, os.path.abspath("@PROJECT_SOURCE_DIR@/python/examples/AbcView/lib"))
-
-try:
-    import imath
-    from alembic import AbcGeom
-except ImportError, e:
-    print 'Error importing alembic:', e
-
-try:
-    import alembicgl
-except ImportError, e:
-    print 'Error importing alembicgl:', e
+import imath
+import alembic
+import alembicgl
 
 # -- General configuration -----------------------------------------------------
 
@@ -55,7 +39,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'PyAlembic'
+project = u'AbcView'
 copyright = u'2012-2014, Sony Pictures Imageworks Inc. and Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.'
 
 # The version info for the project you're documenting, acts as replacement for
