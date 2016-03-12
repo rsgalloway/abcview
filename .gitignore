@@ -1,0 +1,9 @@
+.DS_Store
+*.pyc
+*.swp
+*~
+venv
+build
+dist
+html
+MANIFEST
