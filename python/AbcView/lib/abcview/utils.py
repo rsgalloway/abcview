@@ -1,6 +1,6 @@
 #-******************************************************************************
 #
-# Copyright (c) 2013,
+# Copyright (c) 2013-2015,
 #  Sony Pictures Imageworks Inc. and
 #  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 #
@@ -133,3 +133,30 @@ class memoized(object):
         except KeyError:
             res = cache[key] = self.func(*args, **kw)
         return res
+
+def sum_two_lists(first, second):
+    if second is None:
+        return first
+    if first is None:
+        return second
+    if len(first) != len(second):
+        return first
+    return [x + y for x, y in zip(first, second)]
+
+def diff_two_lists(first, second):
+    if second is None:
+        return first
+    if first is None:
+        return second
+    if len(first) != len(second):
+        return first
+    return [y + x for x, y in zip(first, second)]
+
+def mult_two_lists(first, second):
+    if second is None:
+        return first
+    if first is None:
+        return second
+    if len(first) != len(second):
+        return first
+    return [y * x for x, y in zip(first, second)]

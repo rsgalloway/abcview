@@ -46,7 +46,7 @@ def get_packages(path):
 
 setup(
     name='abcview',
-    version='1.0.9',
+    version='1.1.0',
     description='AbcView - A graphical Alembic inspection and visualization tool',
     author='Ryan Galloway',
     author_email='ryang@ilm.com',

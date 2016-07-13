@@ -1060,10 +1060,11 @@ class GLWidget(QtOpenGL.QGLWidget):
 
             #TODO: pick on translated scenes
             # push local transforms
-            #glPushMatrix()
-            #glTranslatef(*scene.translate)
-            #glRotatef(*scene.rotate)
-            #glScalef(*scene.scale)
+            if scene.has_xform_overrides():
+                glPushMatrix()
+                glTranslatef(*scene.translate)
+                glRotatef(*scene.rotate)
+                glScalef(*scene.scale)
 
             # pick anywhere within the scene bounds
             if scene.mode != Mode.OFF:
@@ -1077,7 +1078,8 @@ class GLWidget(QtOpenGL.QGLWidget):
             scene.draw_bounds(self.state.current_time, mode)
 
             # pop local transforms
-            #glPopMatrix()
+            if scene.has_xform_overrides():
+                glPopMatrix()
 
         #glMatrixMode(GL_PROJECTION)
         glPopMatrix()

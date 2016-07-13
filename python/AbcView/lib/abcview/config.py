@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 #-******************************************************************************
 #
-# Copyright (c) 2012-2016,
+# Copyright (c) 2012-2013,
 #  Sony Pictures Imageworks Inc. and
 #  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 #
@@ -39,7 +39,7 @@ import os
 import sys
 
 __prog__ = "AbcView"
-__version__ = "1.0.9"
+__version__ = "1.1.0"
 
 if sys.platform == "win32":
 	_path_sep_ = ";"
