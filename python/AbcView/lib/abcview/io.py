@@ -358,8 +358,8 @@ class EditableMixin:
                         child.name = overs.get("name", child.name)
                         child.loaded = overs.get("loaded", child.loaded)
                         child.filepath = overs.get("filepath", child.filepath)
-                        child.color = overs.get("properties", {}).get("color", child.color)
                         child.mode = overs.get("properties", {}).get("mode", child.mode)
+                        #child.color = overs.get("properties", {}).get("color", child.color)
                         
                         child.translate = sum_two_lists(child.properties.saved.get("translate", child.translate),
                             overs.get("properties", {}).get("translate")

@@ -1,4 +1,4 @@
-AbcView 1.0.9
+AbcView 1.1.0
 =============
 
 .. moduleauthor:: Ryan Galloway <ryang@ilm.com>
@@ -213,6 +213,10 @@ You can also add it to the session using the :py:mod:`IO module <abcview.io>` ::
                                         "ShotCam")
                              loaded=True))
     >>> s.save()
+
+For a more complicated example, check out the :ref:`contextual overrides <overrides>`
+example.
+
 
 Writing Scripts
 ---------------
