@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AbcView 1.1.0 &mdash; AbcView 1.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="AbcView 1.1.0 documentation" href="#"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> AbcView
+          
+
+          
+            
+            <img src="_static/abcview.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">AbcView 1.1.0</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#display-modes">Display Modes</a></li>
+<li><a class="reference internal" href="#console-widget">Console Widget</a></li>
+<li><a class="reference internal" href="#python-api">Python API</a></li>
+<li><a class="reference internal" href="#writing-scripts">Writing Scripts</a><ul>
+<li><a class="reference internal" href="#script-configuration">Script Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">AbcView</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>AbcView 1.1.0</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="abcview-1-1-0">
+<h1>AbcView 1.1.0<a class="headerlink" href="#abcview-1-1-0" title="Permalink to this headline">¶</a></h1>
+<p>AbcView is a graphical PyQt-based Alembic inspection and visualization tool.
+It offers a number of widgets to help you inspect and visualize your Alembic
+data, as well as assemble hierarchical scenes.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Object, property, sample and value widgets</li>
+<li>Deferred loading for all Alembic objects</li>
+<li>Hierarchical scene assembly (standard JSON format)</li>
+<li>Python console for closer inspection of Alembic objects</li>
+<li>Playback or step through animation using the Timeline widget</li>
+<li>Per-camera render modes (box, fill, line, point)</li>
+<li>Widgets are embeddable in other PyQt applications</li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/screenshot.png"><img alt="_images/screenshot.png" class="align-center" src="_images/screenshot.png" style="width: 800px;" /></a>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>AbcView has the following requirements:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Alembic 1.5+</li>
+<li>Python 2.6+</li>
+<li>PyAlembic</li>
+<li>PyAbcOpenGL</li>
+<li>PyOpenGL</li>
+<li>PyQt4</li>
+<li>argparse</li>
+</ul>
+</div></blockquote>
+<p>For your convenience, AbcView comes with a csh wrapper that sets up your environment for running
+AbcView from your Alembic build directory. To build the wrapper inside your Alembic build dir, make
+sure the &#8220;examples&#8221; subdirectory is active in the <code class="docutils literal"><span class="pre">/python/CMakeLists.txt</span></code> file</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ADD_SUBDIRECTORY</span><span class="p">(</span> <span class="n">examples</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>Loading one or more Alembic <a class="reference internal" href="modules.html#abcview.io.Scene" title="abcview.io.Scene"><code class="xref py py-class docutils literal"><span class="pre">scenes</span></code></a>
+or AbcView <a class="reference internal" href="modules.html#abcview.io.Session" title="abcview.io.Session"><code class="xref py py-class docutils literal"><span class="pre">sessions</span></code></a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">abcview</span> <span class="p">[</span><span class="n">file1</span> <span class="o">..</span> <span class="n">fileN</span><span class="p">]</span> <span class="p">[</span><span class="n">OPTIONS</span><span class="p">]</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">filepath</span>              <span class="n">File</span> <span class="n">to</span> <span class="nb">open</span><span class="o">.</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">-</span><span class="n">f</span> <span class="n">FRAME</span><span class="p">,</span> <span class="o">--</span><span class="n">frame</span> <span class="n">FRAME</span>
+                        <span class="n">Frame</span> <span class="n">to</span> <span class="n">load</span> <span class="ow">in</span> <span class="n">viewer</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">first</span> <span class="n">FIRST</span>         <span class="n">Set</span> <span class="n">viewer</span> <span class="n">first</span> <span class="n">frame</span> <span class="n">value</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">last</span> <span class="n">LAST</span>           <span class="n">Set</span> <span class="n">viewer</span> <span class="n">last</span> <span class="n">frame</span> <span class="n">value</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">bounds</span>              <span class="n">Force</span> <span class="n">scene</span> <span class="n">bounds</span> <span class="n">display</span> <span class="n">mode</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">review</span>              <span class="n">Use</span> <span class="n">review</span> <span class="n">display</span> <span class="n">settings</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">reset</span>               <span class="n">Reset</span> <span class="n">settings</span><span class="o">.</span>
+  <span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="o">--</span><span class="n">verbose</span>         <span class="n">Verbose</span> <span class="n">output</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">script</span> <span class="n">SCRIPT</span>       <span class="n">Load</span> <span class="ow">and</span> <span class="n">execute</span> <span class="n">Python</span> <span class="n">script</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Using the <code class="docutils literal"><span class="pre">--bounds</span></code> option tells AbcView to force displaying scenes in bounding box mode.
+If the <code class="docutils literal"><span class="pre">.childBnds</span></code> property is written at export time, this means that AbcView
+can get the bounds information from the archive rather than the GL scene, which usually means
+a much faster load time.</p>
+<p>Save your session at any time using File-&gt;Save/Save As. Loading a saved session is the
+same as loading an Alembic scene</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ abcview file.io
+</pre></div>
+</div>
+</div>
+<div class="section" id="display-modes">
+<h2>Display Modes<a class="headerlink" href="#display-modes" title="Permalink to this headline">¶</a></h2>
+<p>AbcView supports various OpenGL display modes for scene data. Each scene and camera can
+have their own display mode.</p>
+<p>Scene display modes are available by right-clicking on a scene in the Objects widget:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>Clear</cite> - Inherit the display mode from the camera</li>
+<li><cite>Off</cite> - Do not display this scene</li>
+<li><cite>Fill</cite> - Display in selected scene in smooth shaded mode (default)</li>
+<li><cite>Line</cite> - Display the selected scene in line mode</li>
+<li><cite>Point</cite> - Display the scene in point mode</li>
+<li><cite>Bounds</cite> - Per-object bounding boxes [1]</li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/scenedisplay.png"><img alt="_images/scenedisplay.png" class="align-center" src="_images/scenedisplay.png" style="width: 400px;" /></a>
+<p>Camera display modes are available by right-clicking anywhere in the Viewer widget:</p>
+<a class="reference internal image-reference" href="_images/cameradisplay.png"><img alt="_images/cameradisplay.png" class="align-center" src="_images/cameradisplay.png" style="width: 400px;" /></a>
+<p>AbcView also has a concept of &#8220;load state&#8221;: each <a class="reference internal" href="modules.html#abcview.io.Scene" title="abcview.io.Scene"><code class="xref py py-class docutils literal"><span class="pre">scene</span></code></a> has a load state value of either
+<code class="docutils literal"><span class="pre">true</span></code> or <code class="docutils literal"><span class="pre">false</span></code>. This value is changed by clicking on the &#8220;eye&#8221; icon in the Objects widget
+next to the scene. Toggling the load state will tell AbcView to load or unload the scene from the GL Viewer,
+but it is still available in the Objects widget.</p>
+<p>A scene&#8217;s load state is stored in the session .io file as &#8220;loaded&#8221; under the scene item.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="o">...</span>
+        <span class="s2">&quot;loaded&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>[1] Note:</strong> Object bounds is different from scene bounds (Shift+B). Turning on the scene bounds
+option will display a single bounding box for the entire scene, and object bounds is a scene display
+mode that shows bounding boxes for each object within that scene.</p>
+</div>
+<div class="section" id="console-widget">
+<h2>Console Widget<a class="headerlink" href="#console-widget" title="Permalink to this headline">¶</a></h2>
+<p>The Console widget is an embedded Python interpreter (the same Python process currently
+running AbcView) with preloaded Python modules and convenience handles.</p>
+<p>Pre-loaded modules:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">abcview</span></code> - Pre-loaded <a class="reference internal" href="#python-api-label"><span class="std std-ref">AbcView Python API</span></a></li>
+<li><code class="docutils literal"><span class="pre">alembic</span></code> - Pre-loaded Alembic Python API</li>
+</ul>
+</div></blockquote>
+<p>Convenience handles to AbcView widgets:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">app</span></code> - Main <a class="reference internal" href="modules.html#abcview.app.AbcView" title="abcview.app.AbcView"><code class="xref py py-class docutils literal"><span class="pre">application</span></code></a> accessor</li>
+<li><code class="docutils literal"><span class="pre">objects</span></code> - Objects widget accessor</li>
+<li><code class="docutils literal"><span class="pre">properties</span></code> - Properties widget accessor</li>
+<li><code class="docutils literal"><span class="pre">samples</span></code> - Samples widget accessor</li>
+</ul>
+</div></blockquote>
+<p>Accessing the current <a class="reference internal" href="modules.html#abcview.io.Session" title="abcview.io.Session"><code class="xref py py-class docutils literal"><span class="pre">Session</span></code></a> in the console, or in a script that gets called from
+an AbcView session, is therefore simply:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">session</span>
+</pre></div>
+</div>
+<p>Importing a session or Alembic cache:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">import_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Getting a handle on the currently selected object, property or sample:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span><span class="o">.</span><span class="n">selected</span><span class="p">()</span>
+<span class="go">&lt;alembic.Abc.IObject object at 0x211ccc8&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">properties</span><span class="o">.</span><span class="n">selected</span><span class="p">()</span>
+<span class="go">&lt;alembic.Abc.IArrayProperty object at 0x21816b0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="n">selected</span><span class="p">()</span>
+<span class="go">&lt;imath.V3fArray object at 0x1ff81a0&gt;</span>
+</pre></div>
+</div>
+<p>The current <a class="reference internal" href="modules.html#abcview.widget.viewer_widget.GLState" title="abcview.widget.viewer_widget.GLState"><code class="xref py py-class docutils literal"><span class="pre">state</span></code></a> of the <a class="reference internal" href="modules.html#abcview.widget.viewer_widget.GLWidget" title="abcview.widget.viewer_widget.GLWidget"><code class="xref py py-class docutils literal"><span class="pre">viewer</span></code></a> can be accessed like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span>
+</pre></div>
+</div>
+<p>The list of loaded <a class="reference internal" href="modules.html#abcview.io.Scene" title="abcview.io.Scene"><code class="xref py py-class docutils literal"><span class="pre">scenes</span></code></a> and <a class="reference internal" href="modules.html#abcview.io.Camera" title="abcview.io.Camera"><code class="xref py py-class docutils literal"><span class="pre">cameras</span></code></a> can be access from the state object:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">scenes</span>
+<span class="go">[&lt;GLScene &quot;octopus.abc&quot;&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">app</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">cameras</span>
+<span class="go">[&lt;GLCamera &quot;interactive&quot;&gt;, &lt;GLCamera &quot;side&quot;&gt;]</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> AbcView can have multiple <a class="reference internal" href="modules.html#abcview.widget.viewer_widget.GLWidget" title="abcview.widget.viewer_widget.GLWidget"><code class="xref py py-class docutils literal"><span class="pre">viewer</span></code></a>
+and <a class="reference internal" href="modules.html#abcview.gl.GLCamera" title="abcview.gl.GLCamera"><code class="xref py py-class docutils literal"><span class="pre">camera</span></code></a> instances (RMB-&gt;Layout-&gt;Split). The <code class="docutils literal"><span class="pre">app.viewer</span></code> accessor is always
+set to the <cite>current</cite> viewer, that is, the one most recently interacted with.
+Clicking on another viewer window will change the value of <code class="docutils literal"><span class="pre">app.viewer</span></code>.</p>
+<a class="reference internal image-reference" href="_images/viewers.png"><img alt="_images/viewers.png" class="align-center" src="_images/viewers.png" style="width: 582px;" /></a>
+<p>The above screen capture shows the value of <code class="docutils literal"><span class="pre">app.viewer</span></code> changing after clicking on each
+viewer widget.</p>
+</div>
+<div class="section" id="python-api">
+<span id="python-api-label"></span><h2>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h2>
+<p>You can inspect and manipulate <a class="reference internal" href="modules.html#abcview.io.Session" title="abcview.io.Session"><code class="xref py py-class docutils literal"><span class="pre">session</span></code></a> data using the AbcView Python API,
+for example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">abcview.io</span> <span class="k">import</span> <span class="n">Session</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;file.abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;file.io&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are a number of properties you can set on session items, such as TRS values, color
+and GL rendering mode</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">abcview.io</span> <span class="k">import</span> <span class="n">Mode</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">Mode</span><span class="o">.</span><span class="n">FILL</span>
+</pre></div>
+</div>
+<p>Change the display color</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set transation, rotation and scale values</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">rotate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>AbcView supports both custom non-animated <a class="reference internal" href="modules.html#abcview.io.Camera" title="abcview.io.Camera"><code class="xref py py-class docutils literal"><span class="pre">Cameras</span></code></a> and loading
+<a class="reference internal" href="modules.html#abcview.io.ICamera" title="abcview.io.ICamera"><code class="xref py py-class docutils literal"><span class="pre">ICameras</span></code></a> from Alembic archives. To load an ICamera from the GUI,
+navigate to the ICamera in the objects widget and right-click-&gt;view through selected.
+You can also add it to the session using the <a class="reference internal" href="modules.html#module-abcview.io" title="abcview.io"><code class="xref py py-mod docutils literal"><span class="pre">IO</span> <span class="pre">module</span></code></a></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">abcview.io</span> <span class="k">import</span> <span class="n">ICamera</span><span class="p">,</span> <span class="n">get_object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">ICamera</span><span class="p">(</span><span class="n">get_object</span><span class="p">(</span><span class="s2">&quot;shotcam.abc&quot;</span><span class="p">,</span>
+<span class="go">                                    &quot;ShotCam&quot;)</span>
+<span class="go">                         loaded=True))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For a more complicated example, check out the <a class="reference internal" href="overrides.html#overrides"><span class="std std-ref">contextual overrides</span></a>
+example.</p>
+</div>
+<div class="section" id="writing-scripts">
+<h2>Writing Scripts<a class="headerlink" href="#writing-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Writing scripts for AbcView is straight-forward. Anything you can do in the Console
+widget can be saved to a script file and called from the AbcView Scripts menu.</p>
+<div class="section" id="script-configuration">
+<h3>Script Configuration<a class="headerlink" href="#script-configuration" title="Permalink to this headline">¶</a></h3>
+<p>The Scripts menu is populated by looking for .py files along the
+paths defined by the <code class="docutils literal"><span class="pre">ABCVIEW_SCRIPT_PATH</span></code> environment variable, or by placing
+files in the scripts subdir of the abcview Python package. Script directory
+definitions can also be configured in the <code class="docutils literal"><span class="pre">lib/abcview/config.py</span></code> file.</p>
+<p>There are few restrictions on what you can write in an AbcView script.
+Scripts are executed by AbcView&#8217;s console widget, which simply makes a call to
+<code class="docutils literal"><span class="pre">execfile</span></code> in the current AbcView session.</p>
+<p>Defining a Python docstring at the top of your script will populate the menu tooltip
+as you mouseover scripts in AbcView. For example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">My Awesome AbcView Tool</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The name of the script, version and author are similary defined using private
+attributes, for example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">__name__</span> <span class="o">=</span> <span class="s2">&quot;My Awesome Tool&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Joe Animator&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2012-2016, Sony Pictures Imageworks Inc. and Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

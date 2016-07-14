@@ -1,0 +1,1809 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AbcView 1.0.7 &mdash; AbcView 1.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="AbcView 1.1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AbcView
+          
+
+          
+            
+            <img src="_static/abcview.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">AbcView 1.0.7</a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#module-abcview.app">App Module</a></li>
+<li><a class="reference internal" href="#module-abcview.io">I/O Module</a></li>
+<li><a class="reference internal" href="#module-abcview.gl">GL Module</a></li>
+<li><a class="reference internal" href="#module-abcview.widget.tree_widget">Widgets</a></li>
+<li><a class="reference internal" href="#module-abcview.utils">Utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">AbcView</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>AbcView 1.0.7</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/modules.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="abcview-1-0-7">
+<h1>AbcView 1.0.7<a class="headerlink" href="#abcview-1-0-7" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<p>The AbcView Python API is divided into the IO and GL modules, widgets and utils.</p>
+<div class="section" id="module-abcview.app">
+<span id="app-module"></span><h3>App Module<a class="headerlink" href="#module-abcview.app" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="abcview.app.create_app">
+<code class="descclassname">abcview.app.</code><code class="descname">create_app</code><span class="sig-paren">(</span><em>files=None</em>, <em>first_frame=None</em>, <em>last_frame=None</em>, <em>current_frame=None</em>, <em>fps=24.0</em>, <em>script=None</em>, <em>bounds=False</em>, <em>mode=None</em>, <em>review=False</em>, <em>reset=False</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#create_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.create_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new instance of an <a class="reference internal" href="#abcview.app.AbcView" title="abcview.app.AbcView"><code class="xref py py-class docutils literal"><span class="pre">AbcView</span></code></a> application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>files</strong> &#8211; list of files to load</li>
+<li><strong>first_frame</strong> &#8211; set first frame</li>
+<li><strong>last_frame</strong> &#8211; set last frame</li>
+<li><strong>current_frame</strong> &#8211; set current frame</li>
+<li><strong>fps</strong> &#8211; frames per second (default 24)</li>
+<li><strong>script</strong> &#8211; python script to load</li>
+<li><strong>bounds</strong> &#8211; force scene bounding box mode</li>
+<li><strong>mode</strong> &#8211; default object draw mode</li>
+<li><strong>review</strong> &#8211; use review settings</li>
+<li><strong>reset</strong> &#8211; reset layout settings</li>
+<li><strong>verbose</strong> &#8211; verbose standard out</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">exit code</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.app.AbcView">
+<em class="property">class </em><code class="descclassname">abcview.app.</code><code class="descname">AbcView</code><span class="sig-paren">(</span><em>filepath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main application. The best way to instantiate this class is to use
+the <a class="reference internal" href="#abcview.app.create_app" title="abcview.app.create_app"><code class="xref py py-func docutils literal"><span class="pre">create_app()</span></code></a> function.</p>
+<dl class="method">
+<dt id="abcview.app.AbcView.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears session and viewer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.confirm_close">
+<code class="descname">confirm_close</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.confirm_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.confirm_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Window close confirmation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> &#8211; text to display</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.find">
+<code class="descname">find</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>searches for objects in the tree matching name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.get_selected">
+<code class="descname">get_selected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.get_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.get_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the actively selected AbcView object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_bad_scene">
+<code class="descname">handle_bad_scene</code><span class="sig-paren">(</span><em>scene</em>, <em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_bad_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_bad_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Undrawabe scene signal handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scene</strong> &#8211; GLScene</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_find">
+<code class="descname">handle_find</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_find" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles input from the search box</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_first_frame_change">
+<code class="descname">handle_first_frame_change</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_first_frame_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_first_frame_change" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles first frame change from time slider</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frame</strong> &#8211; frame number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_frame_all">
+<code class="descname">handle_frame_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_frame_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_frame_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frame all.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_frame_object">
+<code class="descname">handle_frame_object</code><span class="sig-paren">(</span><em>item=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_frame_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_frame_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object level framing handler. Called when a user types &#8216;f&#8217; while
+the object tree widget has focus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; ObjectTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_frame_scene">
+<code class="descname">handle_frame_scene</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_frame_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_frame_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scene level framing handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; SceneTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_import">
+<code class="descname">handle_import</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-&gt;Import menud handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_item_loaded">
+<code class="descname">handle_item_loaded</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_item_loaded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_item_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>load checkbox click handler</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; SceneTreeWidgetItem, SessionTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_item_selected">
+<code class="descname">handle_item_selected</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_item_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_item_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>item click handler</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; SceneTreeWidgetItem, SessionTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_item_unloaded">
+<code class="descname">handle_item_unloaded</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_item_unloaded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_item_unloaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Item unloaded handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; ObjectTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_last_frame_change">
+<code class="descname">handle_last_frame_change</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_last_frame_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_last_frame_change" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles last frame change from time slider</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frame</strong> &#8211; frame number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_new">
+<code class="descname">handle_new</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_new" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-&gt;New menu handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_new_camera">
+<code class="descname">handle_new_camera</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_new_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_new_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles adding a new camera to the session</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; GLCamera</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_object_clicked">
+<code class="descname">handle_object_clicked</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_object_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_object_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object tree item clicked handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; ObjectTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_object_selected">
+<code class="descname">handle_object_selected</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_object_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_object_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>GLWidget object selected handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; name of object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_open">
+<code class="descname">handle_open</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-&gt;Open menud handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_play">
+<code class="descname">handle_play</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_play" title="Permalink to this definition">¶</a></dt>
+<dd><p>Playback handler, starts playing the viewer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_property_clicked">
+<code class="descname">handle_property_clicked</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_property_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_property_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property tree item clicked handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; PropertyTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_reload">
+<code class="descname">handle_reload</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-&gt;Reload menu handler, reloads session</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_scene_opened">
+<code class="descname">handle_scene_opened</code><span class="sig-paren">(</span><em>scene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_scene_opened"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_scene_opened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scene open signal handler.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_scene_selected">
+<code class="descname">handle_scene_selected</code><span class="sig-paren">(</span><em>scene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_scene_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_scene_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>GLWidget scene selected handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scene</strong> &#8211; GLScene</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_set_camera">
+<code class="descname">handle_set_camera</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_set_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles setting the camera name on the session</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; GLCamera</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_state_play_fwd">
+<code class="descname">handle_state_play_fwd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_state_play_fwd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_state_play_fwd" title="Permalink to this definition">¶</a></dt>
+<dd><p>viewer state play foward signal handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_state_play_stop">
+<code class="descname">handle_state_play_stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_state_play_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_state_play_stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>viewer state play stop signal handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_stop">
+<code class="descname">handle_stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Viewer playback stop handler, stops the viewer playback.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_time_slider_change">
+<code class="descname">handle_time_slider_change</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_time_slider_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_time_slider_change" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles frame changes coming from time slider</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frame</strong> &#8211; frame number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_update_frame">
+<code class="descname">handle_update_frame</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_update_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_update_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>handles frame changes coming from viewer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.handle_view_camera">
+<code class="descname">handle_view_camera</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.handle_view_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.handle_view_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>object tree &#8216;view through selected&#8217; menu handler</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; CameraTreeWidgetItem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.import_file">
+<code class="descname">import_file</code><span class="sig-paren">(</span><em>filepath</em>, <em>overrides=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.import_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.import_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>File importer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filepath</strong> &#8211; file path to import, adds to session</li>
+<li><strong>overrides</strong> &#8211; parameter overrides dict</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.keyPressEvent">
+<code class="descname">keyPressEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.keyPressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles key press events for the main application. If nothing
+matches, it defers to the viewer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.load_script">
+<code class="descname">load_script</code><span class="sig-paren">(</span><em>script</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.load_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.load_script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads and executes a python AbcView script.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>script</strong> &#8211; code or path to file containing python code.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.load_settings">
+<code class="descname">load_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.load_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.load_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads AbcView layout settings from a PyQt settings file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.open_file">
+<code class="descname">open_file</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.open_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.open_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>File loader</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> &#8211; file path to load, replaces session</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.reset_settings">
+<code class="descname">reset_settings</code><span class="sig-paren">(</span><em>width=550</em>, <em>height=500</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.reset_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.reset_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the AbcView layout settings to default values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.review_settings">
+<code class="descname">review_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.review_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.review_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads &#8220;review&#8221; display settings. Does not affect saved settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.save_session">
+<code class="descname">save_session</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.save_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.save_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current AbcView session to  a given filepath, or
+to the current filepath if filepath is None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> &#8211; save to filepath (passing no args or None
+overrwrites current session file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.save_settings">
+<code class="descname">save_settings</code><span class="sig-paren">(</span><em>settings=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.save_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.save_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves layout settings to a PyQt settings file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.set_default_mode">
+<code class="descname">set_default_mode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.set_default_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.set_default_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the default display mode that overrides anything in the
+session file(s). Disable by setting mode to None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> &#8211; alembic.io.Mode value, or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.set_frames_from_scene">
+<code class="descname">set_frames_from_scene</code><span class="sig-paren">(</span><em>scene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.set_frames_from_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.set_frames_from_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the time slider&#8217;s frame range according to the min/max
+frames of the given scene.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scene</strong> &#8211; GLScene object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.set_frames_from_session">
+<code class="descname">set_frames_from_session</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.set_frames_from_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.set_frames_from_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the time slider&#8217;s frame range according to the min/max
+frames of the given session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; GLScene object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.set_load_files">
+<code class="descname">set_load_files</code><span class="sig-paren">(</span><em>filepaths</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.set_load_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.set_load_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the deferred load list. Loads files after the main window and
+event loop is up and running.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filepath</strong> &#8211; list of files to load</li>
+<li><strong>mode</strong> &#8211; Override display mode (abcview.io.Mode)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.app.AbcView.toggle_widget">
+<code class="descname">toggle_widget</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#AbcView.toggle_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.AbcView.toggle_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggles visibilty of given widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>widget</strong> &#8211; AbcView widget object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="abcview.app.io2gl">
+<code class="descclassname">abcview.app.</code><code class="descname">io2gl</code><span class="sig-paren">(</span><em>item</em>, <em>viewer=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#io2gl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.io2gl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively recasts an IO-module object to a GL-module object. 
+Used for loading session items into the GL viewer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>item</strong> &#8211; Session, Scene, Camera or ICamera object</li>
+<li><strong>viewer</strong> &#8211; GLWidget object</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="abcview.app.version_check">
+<code class="descclassname">abcview.app.</code><code class="descname">version_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/app.html#version_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.app.version_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that alembic and alembicgl can be imported and
+that they meet the minimum requires versions.</p>
+<p>Current minimum version requirements for Alembic are 1.5.0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">1 or 0</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-abcview.io">
+<span id="i-o-module"></span><h3>I/O Module<a class="headerlink" href="#module-abcview.io" title="Permalink to this headline">¶</a></h3>
+<p>The IO module handles serialization and deserialization of the assembled 
+scenes and sessions. The hierarchy structure basically consists of a 
+top-level Session object that contains children items which can be either
+Scenes, Sessions, Cameras or ICAmeras. Each item in the hierarchy has
+a properties attribute for storing custom attributes. Only Scenes and ICameras
+reference Alembic archives.</p>
+<p>Session hierarchy:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Session
+    |- Properties
+    |- Cameras
+    `- Items
+          `- Scene
+               |- Properties
+               `- file.abc
+</pre></div>
+</div>
+<p>Sessions can also reference other session files.</p>
+<dl class="class">
+<dt id="abcview.io.Scene">
+<em class="property">class </em><code class="descclassname">abcview.io.</code><code class="descname">Scene</code><span class="sig-paren">(</span><em>filepath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a single item in an AbcView file 
+(either .abc or .io file)</p>
+<dl class="attribute">
+<dt id="abcview.io.Scene.color">
+<code class="descname">color</code><a class="headerlink" href="#abcview.io.Scene.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>color to display in viewer</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="abcview.io.Scene.deserialize">
+<em class="property">classmethod </em><code class="descname">deserialize</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Scene.deserialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Scene.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserializes an Alembic scene from json data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.io.Scene.mode">
+<code class="descname">mode</code><a class="headerlink" href="#abcview.io.Scene.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>GL polygon mode property</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.io.Scene.rotate">
+<code class="descname">rotate</code><a class="headerlink" href="#abcview.io.Scene.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>rotation property</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.io.Scene.scale">
+<code class="descname">scale</code><a class="headerlink" href="#abcview.io.Scene.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>scale property</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.io.Scene.translate">
+<code class="descname">translate</code><a class="headerlink" href="#abcview.io.Scene.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>translate property</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.io.Session">
+<em class="property">class </em><code class="descclassname">abcview.io.</code><code class="descname">Session</code><span class="sig-paren">(</span><em>filepath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbcView API Session object. Top level container layer that holds
+properties and child session or scene objects.</p>
+<p>De/serialization layer for AbcView sessions.</p>
+<dl class="method">
+<dt id="abcview.io.Session.add_camera">
+<code class="descname">add_camera</code><span class="sig-paren">(</span><em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.add_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.add_camera" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">GLCamera</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.add_file">
+<code class="descname">add_file</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.add_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.add_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a filepath to the session</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> &#8211; path to file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.add_item">
+<code class="descname">add_item</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.add_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.add_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds and item to the session</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; Scene or Session object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.io.Session.cameras">
+<code class="descname">cameras</code><a class="headerlink" href="#abcview.io.Session.cameras" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.is_dirty">
+<code class="descname">is_dirty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.is_dirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.is_dirty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change that requires saving.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.io.Session.items">
+<code class="descname">items</code><a class="headerlink" href="#abcview.io.Session.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>child items</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>filepath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a session .io file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.merge">
+<code class="descname">merge</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merges a given session into this session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; Session object to merge in</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.remove_camera">
+<code class="descname">remove_camera</code><span class="sig-paren">(</span><em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.remove_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.remove_camera" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">GLCamera</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.remove_item">
+<code class="descname">remove_item</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.remove_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.remove_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes an item from the session</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> &#8211; Scene or Session object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>filepath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a session to a .io file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.serialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes the session object to a JSON dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.set_camera">
+<code class="descname">set_camera</code><span class="sig-paren">(</span><em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.set_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the &#8220;active&#8221; camera for a given session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">GLCamera</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.io.Session.walk">
+<code class="descname">walk</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Session.walk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Session.walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursive generator that yields Session, Scene and Camera objects.
+Adds a .session attribute to each item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yield:</th><td class="field-body">Session, Scene or Camera objects</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.io.Camera">
+<em class="property">class </em><code class="descclassname">abcview.io.</code><code class="descname">Camera</code><span class="sig-paren">(</span><em>name</em>, <em>loaded=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#Camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.Camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbcView API Camera object. Camera attributes are not
+animatable as opposed to Alembic ICamera attributes.</p>
+<p>Acting de/serialization layer for GLCamera objects.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.io.ICamera">
+<em class="property">class </em><code class="descclassname">abcview.io.</code><code class="descname">ICamera</code><span class="sig-paren">(</span><em>icamera</em>, <em>loaded=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#ICamera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.ICamera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alembic ICamera de/serialization wrapper class. Use this class
+for loading Alembic ICameras.</p>
+<p>Setting up a basic scene with a camera</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># imports</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">abcview.io</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">ICamera</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">abcview.utils</span> <span class="k">import</span> <span class="n">get_object</span>
+
+<span class="c1"># create session, add scene file</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">session</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;scene.abc&quot;</span><span class="p">)</span>
+
+<span class="c1"># add icamera wrapped in ICamera IO class</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">session</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">ICamera</span><span class="p">(</span><span class="n">get_object</span><span class="p">(</span><span class="s2">&quot;shotcam.abc&quot;</span><span class="p">,</span> 
+                                          <span class="s2">&quot;ShotCam&quot;</span><span class="p">)</span>
+                               <span class="n">loaded</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="c1"># save session</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">session</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;scene.io&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="abcview.io.ICamera.aspect_ratio">
+<code class="descname">aspect_ratio</code><span class="sig-paren">(</span><em>seconds=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/io.html#ICamera.aspect_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.io.ICamera.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>From Alembic/AbcGeom/CameraSample.h:</p>
+<p>The amount the camera&#8217;s lens compresses the image horizontally
+(width / height aspect ratio)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.io.ICamera.name">
+<code class="descname">name</code><a class="headerlink" href="#abcview.io.ICamera.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Camera name</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-abcview.gl">
+<span id="gl-module"></span><h3>GL Module<a class="headerlink" href="#module-abcview.gl" title="Permalink to this headline">¶</a></h3>
+<p>When loading a Session object into the AbcView GUI, the IO objects are
+replaced with corresponding OpenGL objects from the GL module. The GL
+module classes provide GL-wrapped methods for viewing and manipulating
+Alembic scenes in AbcView GLViewer widgets.</p>
+<dl class="class">
+<dt id="abcview.gl.GLCamera">
+<em class="property">class </em><code class="descclassname">abcview.gl.</code><code class="descname">GLCamera</code><span class="sig-paren">(</span><em>viewer</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/gl.html#GLCamera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.gl.GLCamera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds OpenGL methods to io.Camera objects.</p>
+<p>Each Camera object contains a number of AbcOpenGL camera children, one for
+each GLWidget viewer object as a separate &#8220;view&#8221;. Each time a new view is
+added, a new AbcOpenGL GLCamera is added to the list of &#8220;views&#8221;, since each
+of these cameras may have a slightly different representation, for example
+the size of the camera corresponds to the viewer size.</p>
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.aspect_ratio">
+<code class="descname">aspect_ratio</code><a class="headerlink" href="#abcview.gl.GLCamera.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>aspect ratio</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.center">
+<code class="descname">center</code><a class="headerlink" href="#abcview.gl.GLCamera.center" title="Permalink to this definition">¶</a></dt>
+<dd><p>center of interest</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.far">
+<code class="descname">far</code><a class="headerlink" href="#abcview.gl.GLCamera.far" title="Permalink to this definition">¶</a></dt>
+<dd><p>get/set far clipping plane</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.fovx">
+<code class="descname">fovx</code><a class="headerlink" href="#abcview.gl.GLCamera.fovx" title="Permalink to this definition">¶</a></dt>
+<dd><p>get/set camera fov X</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.fovy">
+<code class="descname">fovy</code><a class="headerlink" href="#abcview.gl.GLCamera.fovy" title="Permalink to this definition">¶</a></dt>
+<dd><p>get/set camera fov Y</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.near">
+<code class="descname">near</code><a class="headerlink" href="#abcview.gl.GLCamera.near" title="Permalink to this definition">¶</a></dt>
+<dd><p>get/set near clipping plane</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.rotation">
+<code class="descname">rotation</code><a class="headerlink" href="#abcview.gl.GLCamera.rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>get/set rotation (imath.V3d)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.scale">
+<code class="descname">scale</code><a class="headerlink" href="#abcview.gl.GLCamera.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>get/set scale (imath.V3d)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLCamera.translation">
+<code class="descname">translation</code><a class="headerlink" href="#abcview.gl.GLCamera.translation" title="Permalink to this definition">¶</a></dt>
+<dd><p>get/set translation (imath.V3d)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.gl.GLICamera">
+<em class="property">class </em><code class="descclassname">abcview.gl.</code><code class="descname">GLICamera</code><span class="sig-paren">(</span><em>viewer</em>, <em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/gl.html#GLICamera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.gl.GLICamera" title="Permalink to this definition">¶</a></dt>
+<dd><p>GL wrapper for ICamera objects</p>
+<dl class="attribute">
+<dt id="abcview.gl.GLICamera.aspect_ratio">
+<code class="descname">aspect_ratio</code><a class="headerlink" href="#abcview.gl.GLICamera.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>aspect ratio</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLICamera.center">
+<code class="descname">center</code><a class="headerlink" href="#abcview.gl.GLICamera.center" title="Permalink to this definition">¶</a></dt>
+<dd><p>center of interest</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.gl.GLICamera.screen_window">
+<code class="descname">screen_window</code><a class="headerlink" href="#abcview.gl.GLICamera.screen_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>screen window</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.gl.GLScene">
+<em class="property">class </em><code class="descclassname">abcview.gl.</code><code class="descname">GLScene</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/gl.html#GLScene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.gl.GLScene" title="Permalink to this definition">¶</a></dt>
+<dd><p>GL wrapper for Scene objects.</p>
+<dl class="method">
+<dt id="abcview.gl.GLScene.draw">
+<code class="descname">draw</code><span class="sig-paren">(</span><em>visible_only=True</em>, <em>bounds_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/gl.html#GLScene.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.gl.GLScene.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>draws the scene</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>visible_only</strong> &#8211; drawing depends on visible property being set</li>
+<li><strong>bounds_only</strong> &#8211; draw object level bounding boxes only</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.gl.GLScene.draw_bounds">
+<code class="descname">draw_bounds</code><span class="sig-paren">(</span><em>seconds=0</em>, <em>mode=GL_LINES</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/gl.html#GLScene.draw_bounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.gl.GLScene.draw_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw scene-level bounding box for a given time in secs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.gl.GLScene.drawable">
+<code class="descname">drawable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/gl.html#GLScene.drawable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.gl.GLScene.drawable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this scene is drawable.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-abcview.widget.tree_widget">
+<span id="widgets"></span><h3>Widgets<a class="headerlink" href="#module-abcview.widget.tree_widget" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="abcview.widget.tree_widget.AbcTreeWidgetItem">
+<em class="property">class </em><code class="descclassname">abcview.widget.tree_widget.</code><code class="descname">AbcTreeWidgetItem</code><span class="sig-paren">(</span><em>parent</em>, <em>object=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/tree_widget.html#AbcTreeWidgetItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.tree_widget.AbcTreeWidgetItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class from which all other tree widgets are derived.</p>
+<dl class="method">
+<dt id="abcview.widget.tree_widget.AbcTreeWidgetItem.setText">
+<code class="descname">setText</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/tree_widget.html#AbcTreeWidgetItem.setText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.tree_widget.AbcTreeWidgetItem.setText" title="Permalink to this definition">¶</a></dt>
+<dd><p>setText override that looks up the tree column header index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.tree_widget.AbcTreeWidgetItem.setToolTip">
+<code class="descname">setToolTip</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/tree_widget.html#AbcTreeWidgetItem.setToolTip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.tree_widget.AbcTreeWidgetItem.setToolTip" title="Permalink to this definition">¶</a></dt>
+<dd><p>setToolTip override that looks up the tree column header index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.tree_widget.AbcTreeWidgetItem.set_bad">
+<code class="descname">set_bad</code><span class="sig-paren">(</span><em>bad</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/tree_widget.html#AbcTreeWidgetItem.set_bad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.tree_widget.AbcTreeWidgetItem.set_bad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this tree widget item as being &#8220;bad&#8221; for some reason, e.g. an 
+undrawable scene, with a visual indicator.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.widget.tree_widget.ArrayThread">
+<em class="property">class </em><code class="descclassname">abcview.widget.tree_widget.</code><code class="descname">ArrayThread</code><span class="sig-paren">(</span><em>parent</em>, <em>array</em>, <em>first=0</em>, <em>last=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/tree_widget.html#ArrayThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.tree_widget.ArrayThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple Qthread that emits values from a (long) array. Takes a
+QWidget parent, an array and a max number of elements to emit
+as arguments (if max is None, get all of them).</p>
+<dl class="attribute">
+<dt id="abcview.widget.tree_widget.ArrayThread.first">
+<code class="descname">first</code><a class="headerlink" href="#abcview.widget.tree_widget.ArrayThread.first" title="Permalink to this definition">¶</a></dt>
+<dd><p>array starting point</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.tree_widget.ArrayThread.last">
+<code class="descname">last</code><a class="headerlink" href="#abcview.widget.tree_widget.ArrayThread.last" title="Permalink to this definition">¶</a></dt>
+<dd><p>array ending point</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.widget.tree_widget.SceneLineEditor">
+<em class="property">class </em><code class="descclassname">abcview.widget.tree_widget.</code><code class="descname">SceneLineEditor</code><span class="sig-paren">(</span><em>parent</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/tree_widget.html#SceneLineEditor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.tree_widget.SceneLineEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Top-level delegate for SceneTreeWidgetItems, used on the name column to 
+facilitate scene renaming.</p>
+</dd></dl>
+
+<span class="target" id="module-abcview.widget.viewer_widget"></span><dl class="class">
+<dt id="abcview.widget.viewer_widget.GLState">
+<em class="property">class </em><code class="descclassname">abcview.widget.viewer_widget.</code><code class="descname">GLState</code><span class="sig-paren">(</span><em>fps=24.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global GL viewer state manager. Manages list of Cameras and Scenes, 
+which can be shared between viewers.</p>
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.add_camera">
+<code class="descname">add_camera</code><span class="sig-paren">(</span><em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.add_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.add_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new GLCamera to the state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; GLCamera object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.add_file">
+<code class="descname">add_file</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.add_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.add_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic add file method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> &#8211; path to file to add</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.add_scene">
+<code class="descname">add_scene</code><span class="sig-paren">(</span><em>scene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.add_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.add_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a scene to the viewer session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scene</strong> &#8211; GLScene object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.cameras">
+<code class="descname">cameras</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.cameras" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the current state.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.current_frame">
+<code class="descname">current_frame</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.current_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>set/get current frame</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.current_time">
+<code class="descname">current_time</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.current_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>set/get current time</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.frame_count">
+<code class="descname">frame_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.frame_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.frame_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns total frame count.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.frame_range">
+<code class="descname">frame_range</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.frame_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.frame_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns min/max frame range as a tuple.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.get_camera">
+<code class="descname">get_camera</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.get_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.get_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a named camera for a given viewer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; GLCamera object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.is_playing">
+<code class="descname">is_playing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.is_playing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.is_playing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the playback timer is running.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.max_frame">
+<code class="descname">max_frame</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.max_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>set/get maximum frame</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.max_time">
+<code class="descname">max_time</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.max_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>set/get maximum time</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.min_frame">
+<code class="descname">min_frame</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.min_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>set/get minimum frame</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.min_time">
+<code class="descname">min_time</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.min_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>set/get minimum time</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.play">
+<code class="descname">play</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.play" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plays loaded scenes by activating timer and setting callback</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.remove_camera">
+<code class="descname">remove_camera</code><span class="sig-paren">(</span><em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.remove_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.remove_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a GLCamera object from the state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; GLCamera object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.remove_scene">
+<code class="descname">remove_scene</code><span class="sig-paren">(</span><em>scene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.remove_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.remove_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a given GLScene object from the master scene.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scene</strong> &#8211; GLScene to remove.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLState.scenes">
+<code class="descname">scenes</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.scenes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops scene playback</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLState.time_range">
+<code class="descname">time_range</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLState.time_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLState.time_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns min/max time range in seconds as a tuple.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.widget.viewer_widget.GLWidget">
+<em class="property">class </em><code class="descclassname">abcview.widget.viewer_widget.</code><code class="descname">GLWidget</code><span class="sig-paren">(</span><em>parent=None</em>, <em>state=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbcView OpenGL Widget.</p>
+<p>Basic usage</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">create_viewer_app</span><span class="p">(</span><span class="s2">&quot;file.abc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or inside a larger Qt application</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">GLWidget</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;file.abc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.add_camera">
+<code class="descname">add_camera</code><span class="sig-paren">(</span><em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.add_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.add_camera" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; GLCamera object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.add_file">
+<code class="descname">add_file</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.add_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.add_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a given filepath into the GL viewer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> &#8211; path to Alembic file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.add_scene">
+<code class="descname">add_scene</code><span class="sig-paren">(</span><em>scene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.add_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.add_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a scene to the viewer session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scene</strong> &#8211; GLScene object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.aspect_ratio">
+<code class="descname">aspect_ratio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.aspect_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns current aspect ration of the viewer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abcview.widget.viewer_widget.GLWidget.bounds">
+<code class="descname">bounds</code><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>scene bounding box</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets this GL viewer widget, clears the shared state
+and creates a new default interactive camera.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.frame">
+<code class="descname">frame</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frames the viewer&#8217;s active camera on the bounds of the currently
+loaded and visible scenes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bounds</strong> &#8211; imath.Box3d bounds object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.handle_camera_action">
+<code class="descname">handle_camera_action</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.handle_camera_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.handle_camera_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>New camera menu handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> &#8211; QAction object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.handle_set_camera">
+<code class="descname">handle_set_camera</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.handle_set_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.handle_set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets camera from name derived from the text of a QAction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> &#8211; QAction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.handle_set_mode">
+<code class="descname">handle_set_mode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.handle_set_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.handle_set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set active camera drawing mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> &#8211; abcview.io.Mode enum value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.handle_state_change">
+<code class="descname">handle_state_change</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.handle_state_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.handle_state_change" title="Permalink to this definition">¶</a></dt>
+<dd><p>State change signal handler.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.keyPressEvent">
+<code class="descname">keyPressEvent</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.keyPressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>key press event handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.mouseDoubleClickEvent">
+<code class="descname">mouseDoubleClickEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.mouseDoubleClickEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.mouseDoubleClickEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>mouse double-click event handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.mouseMoveEvent">
+<code class="descname">mouseMoveEvent</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.mouseMoveEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>mouse move event handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.mousePressEvent">
+<code class="descname">mousePressEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.mousePressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>mouse press event handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.mouseReleaseEvent">
+<code class="descname">mouseReleaseEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.mouseReleaseEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>mouse release event handler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.paintGL">
+<code class="descname">paintGL</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.paintGL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.paintGL" title="Permalink to this definition">¶</a></dt>
+<dd><p>OpenGL painting override</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.remove_camera">
+<code class="descname">remove_camera</code><span class="sig-paren">(</span><em>camera</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.remove_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.remove_camera" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; GLCamera object to remove</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.remove_scene">
+<code class="descname">remove_scene</code><span class="sig-paren">(</span><em>scene</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.remove_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.remove_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a given GLScene object from the master scene.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scene</strong> &#8211; GLScene to remove.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.selection">
+<code class="descname">selection</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bounding box selection handler. This handles selecting at the 
+scene level, e.g. GLScenes. Object-level selection is handled
+in the AbcOpenGL lib.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> &#8211; mouse x position</li>
+<li><strong>y</strong> &#8211; mouse y position</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of GLScene objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.set_camera">
+<code class="descname">set_camera</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.set_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the scene camera from a given camera name string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>camera</strong> &#8211; Name of camera or GLCamera object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.setup_default_camera">
+<code class="descname">setup_default_camera</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.setup_default_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.setup_default_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the default interactive camera for this view (and others if the
+state is shared between viewers).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.split">
+<code class="descname">split</code><span class="sig-paren">(</span><em>orientation=2</em>, <em>wipe=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splist the viewer into two separate widgets according
+to the orientation param.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>QGroupBox
+    `- QSplitter
+            |- QGroupBox
+            |       `- GLWidget
+            `- QGroupBox
+                    `- GLWidget
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.split_horz">
+<code class="descname">split_horz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.split_horz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.split_horz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the viewer horizontally.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.split_vert">
+<code class="descname">split_vert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.split_vert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.split_vert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the viewer vertically.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.unsplit">
+<code class="descname">unsplit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.unsplit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.unsplit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unsplits and deletes current viewer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abcview.widget.viewer_widget.GLWidget.wheelEvent">
+<code class="descname">wheelEvent</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#GLWidget.wheelEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.GLWidget.wheelEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>mouse wheel event handler</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="abcview.widget.viewer_widget.create_viewer_app">
+<code class="descclassname">abcview.widget.viewer_widget.</code><code class="descname">create_viewer_app</code><span class="sig-paren">(</span><em>filepath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#create_viewer_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.create_viewer_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a standalone viewer app.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">abcview.widget.viewer_widget</span> <span class="k">import</span> <span class="n">create_viewer_app</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">create_viewer_app</span><span class="p">(</span><span class="s2">&quot;file.abc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="abcview.widget.viewer_widget.set_diffuse_light">
+<code class="descclassname">abcview.widget.viewer_widget.</code><code class="descname">set_diffuse_light</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#set_diffuse_light"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.set_diffuse_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the GL calls for the light that illuminates objects.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="abcview.widget.viewer_widget.update_camera">
+<code class="descclassname">abcview.widget.viewer_widget.</code><code class="descname">update_camera</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/widget/viewer_widget.html#update_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.widget.viewer_widget.update_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>GL camera update decorator</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-abcview.utils">
+<span id="utils"></span><h3>Utils<a class="headerlink" href="#module-abcview.utils" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="abcview.utils.find_objects">
+<code class="descclassname">abcview.utils.</code><code class="descname">find_objects</code><span class="sig-paren">(</span><em>obj</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/utils.html#find_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.utils.find_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursive generator function that yields objects with
+names matching given name regex.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj</strong> &#8211; Alembic object</li>
+<li><strong>name</strong> &#8211; Name regular expression to match</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yeild:</th><td class="field-body"><p class="first last">Alembic object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="abcview.utils.get_object">
+<code class="descclassname">abcview.utils.</code><code class="descname">get_object</code><span class="sig-paren">(</span><em>filepath</em>, <em>fullname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/utils.html#get_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.utils.get_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an Alembic object from filepath matching the full path
+name fullname.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filepath</strong> &#8211; file path to archive</li>
+<li><strong>fullname</strong> &#8211; full path to the object</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="abcview.utils.get_schema_info">
+<code class="descclassname">abcview.utils.</code><code class="descname">get_schema_info</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/utils.html#get_schema_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.utils.get_schema_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple of the shema, title and base strings.</p>
+<p>Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">getMetaData</span><span class="p">()</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+<span class="go">&#39;schema=AbcGeom_Xform_v3;schemaObjTitle=AbcGeom_Xform_v3:.xform&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_schema_info</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="go">(&#39;AbcGeom_Xform_v3&#39;, &#39;AbcGeom_Xform_v3:.xform&#39;, None)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> &#8211; Alembic IObject.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tuple of strings.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="abcview.utils.memoized">
+<em class="property">class </em><code class="descclassname">abcview.utils.</code><code class="descname">memoized</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/abcview/utils.html#memoized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abcview.utils.memoized" title="Permalink to this definition">¶</a></dt>
+<dd><p>cache the return value of a method</p>
+<p>This class is meant to be used as a decorator of methods. The return value
+from a given method invocation will be cached on the instance whose method
+was invoked. All arguments passed to a method decorated with memoize must
+be hashable.</p>
+<p>If a memoized method is invoked directly on its class the result will not
+be cached. Instead the method will be invoked like a static method:
+class Obj(object):</p>
+<blockquote>
+<div><p>&#64;memoize
+def add_to(self, arg):</p>
+<blockquote>
+<div>return self + arg</div></blockquote>
+</div></blockquote>
+<p>Obj.add_to(1) # not enough arguments
+Obj.add_to(1, 2) # returns 3, result is not cached</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2012-2016, Sony Pictures Imageworks Inc. and Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

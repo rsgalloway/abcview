@@ -1,0 +1,950 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>abcview.gl &mdash; AbcView 1.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="AbcView 1.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AbcView
+          
+
+          
+            
+            <img src="../../_static/abcview.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">AbcView</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>abcview.gl</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for abcview.gl</h1><div class="highlight"><pre>
+<span></span><span class="c1">#-******************************************************************************</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2013,</span>
+<span class="c1">#  Sony Pictures Imageworks Inc. and</span>
+<span class="c1">#  Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd.</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without</span>
+<span class="c1"># modification, are permitted provided that the following conditions are</span>
+<span class="c1"># met:</span>
+<span class="c1"># *       Redistributions of source code must retain the above copyright</span>
+<span class="c1"># notice, this list of conditions and the following disclaimer.</span>
+<span class="c1"># *       Redistributions in binary form must reproduce the above</span>
+<span class="c1"># copyright notice, this list of conditions and the following disclaimer</span>
+<span class="c1"># in the documentation and/or other materials provided with the</span>
+<span class="c1"># distribution.</span>
+<span class="c1"># *       Neither the name of Sony Pictures Imageworks, nor</span>
+<span class="c1"># Industrial Light &amp; Magic, nor the names of their contributors may be used</span>
+<span class="c1"># to endorse or promote products derived from this software without specific</span>
+<span class="c1"># prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1"># &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1"># LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span>
+<span class="c1"># A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1"># OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1"># SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1"># LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1"># DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1"># THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1"># (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1"># OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">#</span>
+<span class="c1">#-******************************************************************************</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="kn">import</span> <span class="nn">imath</span>
+<span class="kn">import</span> <span class="nn">alembic</span>
+<span class="n">kWrapExisting</span> <span class="o">=</span> <span class="n">alembic</span><span class="o">.</span><span class="n">Abc</span><span class="o">.</span><span class="n">WrapExistingFlag</span><span class="o">.</span><span class="n">kWrapExisting</span>
+
+<span class="kn">import</span> <span class="nn">OpenGL</span>
+<span class="n">OpenGL</span><span class="o">.</span><span class="n">ERROR_CHECKING</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="kn">from</span> <span class="nn">OpenGL.GL</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">OpenGL.GLU</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">alembicgl</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    The alembicgl module was not found. Be sure to build AbcOpenGL and</span>
+<span class="s2">    the PyAbcOpenGL Python bindings.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">abcview</span>
+<span class="kn">from</span> <span class="nn">abcview</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">abcview.io</span> <span class="kn">import</span> <span class="n">Mode</span>
+<span class="kn">from</span> <span class="nn">abcview.utils</span> <span class="kn">import</span> <span class="n">memoized</span>
+
+<span class="n">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">When loading a Session object into the AbcView GUI, the IO objects are</span>
+<span class="s2">replaced with corresponding OpenGL objects from the GL module. The GL</span>
+<span class="s2">module classes provide GL-wrapped methods for viewing and manipulating</span>
+<span class="s2">Alembic scenes in AbcView GLViewer widgets.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GLCamera&quot;</span><span class="p">,</span> <span class="s2">&quot;GLICamera&quot;</span><span class="p">,</span> <span class="s2">&quot;GLScene&quot;</span><span class="p">,</span> <span class="p">]</span>
+
+<span class="c1"># alembic cache index</span>
+<span class="n">ARCHIVES</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">SCENES</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span> <span class="nf">accumXform</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">sec</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">IXform</span><span class="o">.</span><span class="n">matches</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">getHeader</span><span class="p">()):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">IXform</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">kWrapExisting</span><span class="p">)</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">getSchema</span><span class="p">()</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">xs</span><span class="o">.</span><span class="n">getTimeSampling</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">getNearIndex</span><span class="p">(</span><span class="n">sec</span><span class="p">,</span> <span class="n">xs</span><span class="o">.</span><span class="n">getNumSamples</span><span class="p">())</span>
+        <span class="n">xf</span> <span class="o">*=</span> <span class="n">xs</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">getMatrix</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">get_final_matrix</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">sec</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">xf</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">M44d</span><span class="p">()</span>
+    <span class="n">xf</span><span class="o">.</span><span class="n">makeIdentity</span><span class="p">()</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">parent</span><span class="p">:</span>
+        <span class="n">accumXform</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">sec</span><span class="p">)</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">xf</span>
+
+<span class="k">def</span> <span class="nf">draw_bounding_box</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">GL_LINES</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws a simple bounding bex defined by the &quot;bounds&quot; arg,</span>
+<span class="sd">    using the OpenGL mode defined by &quot;mode&quot;.</span>
+
+<span class="sd">    :param bounds: imath.Box3d object that defines bounds</span>
+<span class="sd">    :param mode: display mode, e.g. GL_POLYGON, GL_LINES</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">alembicgl</span><span class="o">.</span><span class="n">drawBounds</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">require_loaded</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load decorator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">with_wrapped_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">klass</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">klass</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">with_wrapped_func</span>
+
+<span class="k">class</span> <span class="nc">IArchive</span><span class="p">(</span><span class="n">alembic</span><span class="o">.</span><span class="n">Abc</span><span class="o">.</span><span class="n">IArchive</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Alembic::IArchive wrapper class that sets some default values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IArchive</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
+        
+        <span class="c1"># placeholder for top-most xform schema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bounds_cp</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;IArchive </span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attempts to get the top-most childBnds property value for</span>
+<span class="sd">        a given time in seconds. </span>
+
+<span class="sd">        :param seconds: time in seconds</span>
+<span class="sd">        :return: Box3d bounds value, or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#log.debug(&quot;[%s.bounds] %s&quot; % (repr(self), seconds))</span>
+        
+        <span class="k">if</span> <span class="n">seconds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">seconds</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># limit the levels to walk</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="n">limit</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">IXform</span><span class="o">.</span><span class="n">matches</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">getMetaData</span><span class="p">()):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">IXform</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">getParent</span><span class="p">(),</span> <span class="n">obj</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+                <span class="n">xs</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">getSchema</span><span class="p">()</span>
+                <span class="n">cp</span> <span class="o">=</span> <span class="n">xs</span><span class="o">.</span><span class="n">getChildBoundsProperty</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">valid</span><span class="p">():</span>
+                    <span class="n">ts</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">getTimeSampling</span><span class="p">()</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">getNearIndex</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> 
+                                    <span class="n">cp</span><span class="o">.</span><span class="n">getNumSamples</span><span class="p">())</span>
+                    <span class="k">return</span> <span class="n">cp</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">getNumChildren</span><span class="p">()):</span>
+                <span class="k">return</span> <span class="n">walk</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">getChild</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getTop</span><span class="p">())</span>
+
+<span class="k">class</span> <span class="nc">SceneWrapper</span><span class="p">(</span><span class="n">alembicgl</span><span class="o">.</span><span class="n">SceneWrapper</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    AbcOpenGL::SceneWrapper wrapper class that sets some default values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bad</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_name</span><span class="o">=</span><span class="s2">&quot;load&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Defers actually loading the scene until necessary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">] reading </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">super</span><span class="p">(</span><span class="n">SceneWrapper</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;BAD ARCHIVE: </span><span class="si">%s</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bad</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;SceneWrapper </span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">()</span>
+
+    <span class="nd">@require_loaded</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">bounds_only</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        draws the scene</span>
+<span class="sd">        </span>
+<span class="sd">        :param visible_only: drawing depends on visible property being set</span>
+<span class="sd">        :param bounds_only: draw object level bounding boxes only</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">SceneWrapper</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">visible_only</span><span class="p">,</span> <span class="n">bounds_only</span><span class="p">)</span>
+
+    <span class="nd">@require_loaded</span>
+    <span class="k">def</span> <span class="nf">draw_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">GL_LINES</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;draws scene level bounding box&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">SceneWrapper</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">drawBounds</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="nd">@require_loaded</span>
+    <span class="k">def</span> <span class="nf">bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">imath</span><span class="o">.</span><span class="n">Box3d</span><span class="p">(</span><span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> 
+                               <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">SceneWrapper</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span><span class="p">()</span>
+
+    <span class="nd">@require_loaded</span>
+    <span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">getCurrentTime</span><span class="p">()</span>
+
+    <span class="nd">@require_loaded</span>
+    <span class="k">def</span> <span class="nf">set_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setTime</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@require_loaded</span>
+    <span class="k">def</span> <span class="nf">min_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMinTime</span><span class="p">()</span>
+
+    <span class="nd">@require_loaded</span>
+    <span class="k">def</span> <span class="nf">max_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bad</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMaxTime</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">AbcGLCamera</span><span class="p">(</span><span class="n">alembicgl</span><span class="o">.</span><span class="n">GLCamera</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    AbcOpenGL::GLCamera wrapper class that sets some default values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AbcGLCamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setClippingPlanes</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">100000.0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;AbcGLCamera </span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">get_archive</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    caches alembic archives</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">filepath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ARCHIVES</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[get_archive] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filepath</span><span class="p">)</span>
+        <span class="n">ARCHIVES</span><span class="p">[</span><span class="n">filepath</span><span class="p">]</span> <span class="o">=</span> <span class="n">IArchive</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ARCHIVES</span><span class="p">[</span><span class="n">filepath</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">get_scene</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    caches alembicgl scenes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">filepath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SCENES</span><span class="p">:</span>
+        <span class="n">SCENES</span><span class="p">[</span><span class="n">filepath</span><span class="p">]</span> <span class="o">=</span> <span class="n">SceneWrapper</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">SCENES</span><span class="p">[</span><span class="n">filepath</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">GLCameraMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    GL wrapper for Camera objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">viewer</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+                 <span class="n">translation</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="mf">6.85</span><span class="p">,</span> <span class="mf">1.80</span><span class="p">,</span> <span class="mf">6.85</span><span class="p">),</span>
+                 <span class="n">rotation</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="o">-</span><span class="mf">10.5</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                 <span class="n">scale</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                 <span class="n">center</span> <span class="o">=</span> <span class="mf">9.85</span><span class="p">,</span>
+                 <span class="n">near</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                 <span class="n">far</span> <span class="o">=</span> <span class="mf">10000.0</span><span class="p">,</span>
+                 <span class="n">fovx</span> <span class="o">=</span> <span class="mf">45.0</span><span class="p">,</span>
+                 <span class="n">fovy</span> <span class="o">=</span> <span class="mf">45.0</span><span class="p">,</span>
+                 <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mf">1.85</span><span class="p">,</span>
+                <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param viewer: GLWidget object</span>
+<span class="sd">        :param name: camera name</span>
+<span class="sd">        :param translation:</span>
+<span class="sd">        :param rotation:</span>
+<span class="sd">        :param scale:</span>
+<span class="sd">        :param center:</span>
+<span class="sd">        :param near:</span>
+<span class="sd">        :param far:</span>
+<span class="sd">        :param fovx:</span>
+<span class="sd">        :param fovy:</span>
+<span class="sd">        :param aspect_ratio: </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span> <span class="o">=</span> <span class="n">viewer</span>
+
+        <span class="c1"># index of views for this camera</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">views</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># defaults (must be inheritable by subclasses)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_translation</span> <span class="o">=</span> <span class="n">translation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span> <span class="o">=</span> <span class="n">rotation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_center</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_near</span> <span class="o">=</span> <span class="n">near</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_far</span> <span class="o">=</span> <span class="n">far</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fovx</span> <span class="o">=</span> <span class="n">fovx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fovy</span> <span class="o">=</span> <span class="n">fovy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_aspect_ratio</span> <span class="o">=</span> <span class="n">aspect_ratio</span>
+
+        <span class="c1"># set default size from viewer</span>
+        <span class="k">if</span> <span class="n">viewer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">viewer</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">viewer</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">dolly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="c1"># implement in subclass</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="c1"># implement in subclass</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="c1"># implement in subclass</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">look_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eye</span><span class="p">,</span> <span class="n">at</span><span class="p">):</span>
+        <span class="c1"># implement in subclass</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="c1"># implement in subclass</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">view</span><span class="p">,</span> <span class="n">camera</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">view</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">add_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a new view for this camera.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[GLCameraMixin.add_view] </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">viewer</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="n">viewer</span><span class="p">]</span> <span class="o">=</span> <span class="n">AbcGLCamera</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">setTranslation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_translation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">setRotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">setScale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">setCenterOfInterest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_center</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">setClippingPlanes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_near</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_far</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes a view (glcamera) from this camera.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[GLCameraMixin.remove_view] </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">viewer</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">viewer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="n">viewer</span><span class="p">]</span>
+        <span class="c1"># switch the default viewer for this camera</span>
+        <span class="k">for</span> <span class="n">viewer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">viewer</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span> <span class="o">=</span> <span class="n">viewer</span>
+
+    <span class="k">def</span> <span class="nf">_get_viewer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__viewer</span>
+
+    <span class="k">def</span> <span class="nf">_set_viewer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__viewer</span> <span class="o">=</span> <span class="n">viewer</span>
+
+    <span class="n">viewer</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_viewer</span><span class="p">,</span> <span class="n">_set_viewer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns viewer-based size as a tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cam</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">cam</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">cam</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+
+    <span class="k">def</span> <span class="nf">set_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        sets the size for a given view</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="n">cam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
+        <span class="n">cam</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<div class="viewcode-block" id="GLCamera"><a class="viewcode-back" href="../../modules.html#abcview.gl.GLCamera">[docs]</a><span class="k">class</span> <span class="nc">GLCamera</span><span class="p">(</span><span class="n">abcview</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">Camera</span><span class="p">,</span> <span class="n">GLCameraMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds OpenGL methods to io.Camera objects. </span>
+<span class="sd">    </span>
+<span class="sd">    Each Camera object contains a number of AbcOpenGL camera children, one for</span>
+<span class="sd">    each GLWidget viewer object as a separate &quot;view&quot;. Each time a new view is</span>
+<span class="sd">    added, a new AbcOpenGL GLCamera is added to the list of &quot;views&quot;, since each</span>
+<span class="sd">    of these cameras may have a slightly different representation, for example</span>
+<span class="sd">    the size of the camera corresponds to the viewer size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param viewer: GLWidget object</span>
+<span class="sd">        :param name: camera name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GLCamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">GLCameraMixin</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dolly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">dolly</span><span class="p">(</span><span class="n">imath</span><span class="o">.</span><span class="n">V2d</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">track</span><span class="p">(</span><span class="n">imath</span><span class="o">.</span><span class="n">V2d</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">imath</span><span class="o">.</span><span class="n">V2d</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">look_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eye</span><span class="p">,</span> <span class="n">at</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">lookAt</span><span class="p">(</span><span class="n">eye</span><span class="p">,</span> <span class="n">at</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_translation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">translation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">rotation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">centerOfInterest</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_translation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">translation</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_translation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="o">*</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_translation</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">setTranslation</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="n">translation</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_translation</span><span class="p">,</span> <span class="n">_set_translation</span><span class="p">,</span> 
+                           <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;get/set translation (imath.V3d)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">rotation</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="o">*</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">setRotation</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="n">rotation</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_rotation</span><span class="p">,</span> <span class="n">_set_rotation</span><span class="p">,</span> 
+                        <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;get/set rotation (imath.V3d)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="o">*</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">setScale</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_scale</span><span class="p">,</span> <span class="n">_set_scale</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;get/set scale (imath.V3d)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_near</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">clippingPlanes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_set_near</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_near</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">setClippingPlanes</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">far</span><span class="p">)</span>
+
+    <span class="n">near</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_near</span><span class="p">,</span> <span class="n">_set_near</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;get/set near clipping plane&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_far</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">clippingPlanes</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+   
+    <span class="k">def</span> <span class="nf">_set_far</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_far</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">setClippingPlanes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">near</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="n">far</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_far</span><span class="p">,</span> <span class="n">_set_far</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;get/set far clipping plane&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_fovy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">fovy</span><span class="p">()</span>
+   
+    <span class="k">def</span> <span class="nf">_set_fovy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fovy</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">setFovy</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="n">fovy</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_fovy</span><span class="p">,</span> <span class="n">_set_fovy</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;get/set camera fov Y&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_fovx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fovx</span>
+   
+    <span class="k">def</span> <span class="nf">_set_fovx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fovx</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">fovx</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_fovx</span><span class="p">,</span> <span class="n">_set_fovx</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;get/set camera fov X&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect_ratio</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aspect_ratio</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">aspect_ratio</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_aspect_ratio</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_aspect_ratio</span><span class="p">,</span> <span class="n">_set_aspect_ratio</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;aspect ratio&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">centerOfInterest</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_center</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">setCenterOfInterest</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+
+    <span class="n">center</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_center</span><span class="p">,</span> <span class="n">_set_center</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;center of interest&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="n">cam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cam</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">cam</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">cam</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">set_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="n">cam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
+        <span class="n">cam</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">view</span><span class="p">,</span> <span class="n">camera</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">setClippingPlanes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">near</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">far</span><span class="p">)</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GLICamera"><a class="viewcode-back" href="../../modules.html#abcview.gl.GLICamera">[docs]</a><span class="k">class</span> <span class="nc">GLICamera</span><span class="p">(</span><span class="n">abcview</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">ICamera</span><span class="p">,</span> <span class="n">GLCameraMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    GL wrapper for ICamera objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">,</span> <span class="n">camera</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param viewer: GLWidget object</span>
+<span class="sd">        :param camera: Alembic ICamera object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">viewer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">):</span>
+        <span class="n">GLCameraMixin</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_not_settable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;GLICamera immutable attribute&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_translation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+
+    <span class="n">translation</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_translation</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+
+    <span class="n">rotation</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_rotation</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_scale</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_near</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">near</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+
+    <span class="n">near</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_near</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_far</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">far</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+  
+    <span class="n">far</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_far</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_fovx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fovx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+   
+    <span class="n">fovx</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_fovx</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_fovy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fovx</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspect_ratio</span>
+   
+    <span class="n">fovy</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_fovy</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+
+    <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_aspect_ratio</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;aspect ratio&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_screen_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GLICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">screen_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+
+    <span class="n">screen_window</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_screen_window</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;screen window&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">]</span><span class="o">.</span><span class="n">centerOfInterest</span><span class="p">()</span>
+
+    <span class="n">center</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_center</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;center of interest&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">view</span><span class="p">,</span> <span class="n">camera</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">setTranslation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">translation</span><span class="p">)</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">setRotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotation</span><span class="p">)</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">setClippingPlanes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">near</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">far</span><span class="p">)</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">setFovy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fovy</span><span class="p">)</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GLScene"><a class="viewcode-back" href="../../modules.html#abcview.gl.GLScene">[docs]</a><span class="k">class</span> <span class="nc">GLScene</span><span class="p">(</span><span class="n">abcview</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">Scene</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    GL wrapper for Scene objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GLScene</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+  
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__archive</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__archive</span> <span class="o">=</span> <span class="n">get_archive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__archive</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">scene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__scene</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__scene</span> <span class="o">=</span> <span class="n">get_scene</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__scene</span>
+
+    <span class="k">def</span> <span class="nf">aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+        <span class="nb">min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">()</span>
+        <span class="nb">max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawable</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__archive</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__scene</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="GLScene.draw"><a class="viewcode-back" href="../../modules.html#abcview.gl.GLScene.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visible_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">bounds_only</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        draws the scene</span>
+<span class="sd">        </span>
+<span class="sd">        :param visible_only: drawing depends on visible property being set</span>
+<span class="sd">        :param bounds_only: draw object level bounding boxes only</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">visible_only</span><span class="p">,</span> <span class="n">bounds_only</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="GLScene.draw_bounds"><a class="viewcode-back" href="../../modules.html#abcview.gl.GLScene.draw_bounds">[docs]</a>    <span class="k">def</span> <span class="nf">draw_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">GL_LINES</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw scene-level bounding box for a given time in secs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">glPushName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">scenes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        
+        <span class="c1"># try to get top-most bounds from archive first...</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">bounds</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">draw_bounding_box</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        
+        <span class="c1"># because instantiating the SceneWrapper is slow</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">draw_bounds</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        
+        <span class="n">glPopName</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GLScene.drawable"><a class="viewcode-back" href="../../modules.html#abcview.gl.GLScene.drawable">[docs]</a>    <span class="k">def</span> <span class="nf">drawable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if this scene is drawable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">bad</span></div>
+
+    <span class="nd">@memoized</span>
+    <span class="k">def</span> <span class="nf">selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">camera</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.selection] </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">camera</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">camera</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">selection</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">camera</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    
+    <span class="k">def</span> <span class="nf">set_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawable</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="n">Mode</span><span class="o">.</span><span class="n">OFF</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">set_time</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+   
+    <span class="nd">@memoized</span>
+    <span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+   
+    <span class="k">def</span> <span class="nf">play_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">24</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawable</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">playForward</span><span class="p">(</span><span class="n">fps</span><span class="p">)</span>
+   
+    <span class="nd">@memoized</span>
+    <span class="k">def</span> <span class="nf">min_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">min_time</span><span class="p">()</span>
+   
+    <span class="nd">@memoized</span>
+    <span class="k">def</span> <span class="nf">max_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">max_time</span><span class="p">()</span>
+ 
+    <span class="nd">@memoized</span>
+    <span class="k">def</span> <span class="nf">bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">bounds</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">bounds</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">bounds</span>
+
+    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getTop</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2012-2016, Sony Pictures Imageworks Inc. and Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,1126 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>abcview.widget.tree_widget &mdash; AbcView 1.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="AbcView 1.1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AbcView
+          
+
+          
+            
+            <img src="../../../_static/abcview.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">AbcView</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>abcview.widget.tree_widget</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for abcview.widget.tree_widget</h1><div class="highlight"><pre>
+<span></span><span class="c1">#-******************************************************************************</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2013,</span>
+<span class="c1">#  Sony Pictures Imageworks Inc. and</span>
+<span class="c1">#  Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd.</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without</span>
+<span class="c1"># modification, are permitted provided that the following conditions are</span>
+<span class="c1"># met:</span>
+<span class="c1"># *       Redistributions of source code must retain the above copyright</span>
+<span class="c1"># notice, this list of conditions and the following disclaimer.</span>
+<span class="c1"># *       Redistributions in binary form must reproduce the above</span>
+<span class="c1"># copyright notice, this list of conditions and the following disclaimer</span>
+<span class="c1"># in the documentation and/or other materials provided with the</span>
+<span class="c1"># distribution.</span>
+<span class="c1"># *       Neither the name of Sony Pictures Imageworks, nor</span>
+<span class="c1"># Industrial Light &amp; Magic, nor the names of their contributors may be used</span>
+<span class="c1"># to endorse or promote products derived from this software without specific</span>
+<span class="c1"># prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1"># &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1"># LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span>
+<span class="c1"># A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1"># OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1"># SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1"># LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1"># DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1"># THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1"># (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1"># OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">#</span>
+<span class="c1">#-******************************************************************************</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">uic</span>
+
+<span class="kn">import</span> <span class="nn">imath</span>
+<span class="kn">import</span> <span class="nn">alembic</span>
+<span class="kn">from</span> <span class="nn">abcview.io</span> <span class="kn">import</span> <span class="n">Scene</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Mode</span>
+<span class="kn">from</span> <span class="nn">abcview.gl</span> <span class="kn">import</span> <span class="n">GLScene</span>
+<span class="kn">from</span> <span class="nn">abcview.utils</span> <span class="kn">import</span> <span class="n">find_objects</span><span class="p">,</span> <span class="n">get_schema_info</span>
+<span class="kn">from</span> <span class="nn">abcview</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">config</span>
+
+<span class="k">def</span> <span class="nf">message</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">()</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="n">style</span><span class="o">.</span><span class="n">DIALOG</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ArrayThread"><a class="viewcode-back" href="../../../modules.html#abcview.widget.tree_widget.ArrayThread">[docs]</a><span class="k">class</span> <span class="nc">ArrayThread</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QThread</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple Qthread that emits values from a (long) array. Takes a</span>
+<span class="sd">    QWidget parent, an array and a max number of elements to emit</span>
+<span class="sd">    as arguments (if max is None, get all of them).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">first</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ArrayThread</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="n">array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__last</span> <span class="o">=</span> <span class="n">last</span>
+
+    <span class="k">def</span> <span class="nf">_get_first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__first</span>
+
+    <span class="k">def</span> <span class="nf">_set_first</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__first</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_first</span><span class="p">,</span> <span class="n">_set_first</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;array starting point&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_last</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__last</span>
+
+    <span class="k">def</span> <span class="nf">_set_last</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__last</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">last</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_last</span><span class="p">,</span> <span class="n">_set_last</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;array ending point&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="p">:]):</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;arrayValue (PyQt_PyObject)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;arrayValue (PyQt_PyObject)&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="SceneLineEditor"><a class="viewcode-back" href="../../../modules.html#abcview.widget.tree_widget.SceneLineEditor">[docs]</a><span class="k">class</span> <span class="nc">SceneLineEditor</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Top-level delegate for SceneTreeWidgetItems, used on the name column to </span>
+<span class="sd">    facilitate scene renaming.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SceneLineEditor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;SceneLineEditor&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ClickFocus</span><span class="p">)</span></div>
+
+<span class="c1">## alembic tree items ---------------------------------------------------------</span>
+<div class="viewcode-block" id="AbcTreeWidgetItem"><a class="viewcode-back" href="../../../modules.html#abcview.widget.tree_widget.AbcTreeWidgetItem">[docs]</a><span class="k">class</span> <span class="nc">AbcTreeWidgetItem</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class from which all other tree widgets are derived.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seen</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="nb">object</span>
+    
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> &quot;</span><span class="si">%s</span><span class="s1">&quot;&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valid</span>
+
+    <span class="k">def</span> <span class="nf">_set_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setTextColor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setTextColor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDisabled</span><span class="p">(</span><span class="ow">not</span> <span class="n">valid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__valid</span> <span class="o">=</span> <span class="n">valid</span>
+
+    <span class="n">valid</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_valid</span><span class="p">,</span> <span class="n">_set_valid</span><span class="p">,</span> <span class="s2">&quot;This object is valid&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">parent</span><span class="p">:</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">scene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">while</span> <span class="n">parent</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span> <span class="o">==</span> <span class="n">SceneTreeWidgetItem</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">parent</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">is_removable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+<div class="viewcode-block" id="AbcTreeWidgetItem.set_bad"><a class="viewcode-back" href="../../../modules.html#abcview.widget.tree_widget.AbcTreeWidgetItem.set_bad">[docs]</a>    <span class="k">def</span> <span class="nf">set_bad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bad</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set this tree widget item as being &quot;bad&quot; for some reason, e.g. an </span>
+<span class="sd">        undrawable scene, with a visual indicator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.set_bad] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bad</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AbcTreeWidgetItem.setText"><a class="viewcode-back" href="../../../modules.html#abcview.widget.tree_widget.AbcTreeWidgetItem.setText">[docs]</a>    <span class="k">def</span> <span class="nf">setText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        setText override that looks up the tree column header index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> 
+                <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AbcTreeWidgetItem.setToolTip"><a class="viewcode-back" href="../../../modules.html#abcview.widget.tree_widget.AbcTreeWidgetItem.setToolTip">[docs]</a>    <span class="k">def</span> <span class="nf">setToolTip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        setToolTip override that looks up the tree column header index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> 
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QString</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span></div>
+
+    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+<span class="k">class</span> <span class="nc">ObjectTreeWidgetItem</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Object tree widget item base class.</span>
+
+<span class="sd">        :param object: IObject class object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ObjectTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setChildIndicatorPolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="o">.</span><span class="n">DontShowIndicator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/object.png&quot;</span> <span class="o">%</span> <span class="n">config</span><span class="o">.</span><span class="n">ICON_DIR</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="nb">object</span>
+        <span class="k">if</span> <span class="nb">object</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getNumChildren</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setChildIndicatorPolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="o">.</span><span class="n">ShowIndicator</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="o">.</span><span class="n">getFullName</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generator that yields ObjectTreeWidgetItem objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">md</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">getMetaData</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">ICameraSchema</span><span class="o">.</span><span class="n">matches</span><span class="p">(</span><span class="n">md</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">CameraTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">ObjectTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ArrowCursor</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getProperties</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">propertyheaders</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">props</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="n">header</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getProperties</span><span class="p">()</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="s2">&quot;.geom&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="s2">&quot;.selfBnds&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">sample_index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CameraTreeWidgetItem</span><span class="p">(</span><span class="n">ObjectTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param object: ICamera class object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CameraTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/camera.png&quot;</span> <span class="o">%</span> <span class="n">config</span><span class="o">.</span><span class="n">ICON_DIR</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__camera</span> <span class="o">=</span> <span class="bp">None</span>
+    
+    <span class="k">def</span> <span class="nf">camera</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__camera</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__camera</span> <span class="o">=</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">ICamera</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getParent</span><span class="p">(),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__camera</span>
+
+<span class="k">class</span> <span class="nc">ScenePropertyTreeWidgetItem</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="nb">property</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ScenePropertyTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">property</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nb">property</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">hideSection</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">showSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">showSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+<span class="k">class</span> <span class="nc">PropertyTreeWidgetItem</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="nb">property</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param property: IArray or IScalar Property object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PropertyTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">property</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nb">property</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">isCompound</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setChildIndicatorPolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="o">.</span><span class="n">ShowIndicator</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setChildIndicatorPolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="o">.</span><span class="n">DontShowIndicator</span><span class="p">)</span>
+      
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">showSection</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">hideSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_constant</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;datatype&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">getDataType</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span>
+
+    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">isCompound</span><span class="p">():</span>
+            <span class="k">return</span> <span class="s1">&#39;compound&#39;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">isScalar</span><span class="p">():</span>
+            <span class="k">return</span> <span class="s1">&#39;scalar&#39;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">isArray</span><span class="p">():</span>
+            <span class="k">return</span> <span class="s1">&#39;array&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;unknown&#39;</span>
+
+    <span class="k">def</span> <span class="nf">is_constant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">isCompound</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">isConstant</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">propertyheaders</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="n">header</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">isCompound</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">samples</span>
+
+<span class="k">class</span> <span class="nc">SampleTreeWidgetItem</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param parent: AbcTreeWidget object</span>
+<span class="sd">        :param index: Sample index value</span>
+<span class="sd">        :param sample: Alembic Sample object</span>
+<span class="sd">        :param property: PropertyTreeWidgetItem object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SampleTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nb">property</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample</span> <span class="o">=</span> <span class="n">sample</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">setChildIndicatorPolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="o">.</span><span class="n">DontShowIndicator</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span>
+
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">isScalar</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">getDataType</span><span class="p">()</span><span class="o">.</span><span class="n">getExtent</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SampleTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_set_valid</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
+
+<span class="k">class</span> <span class="nc">ArrayTreeWidgetItem</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ArrayTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setChildIndicatorPolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="o">.</span><span class="n">DontShowIndicator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="c1">## session tree items ---------------------------------------------------------</span>
+<span class="k">class</span> <span class="nc">SessionTreeWidgetItem</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param object: Session</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SessionTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setChildIndicatorPolicy</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidgetItem</span><span class="o">.</span><span class="n">ShowIndicator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;itemLoaded (PyQt_PyObject)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;itemUnloaded (PyQt_PyObject)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCheckState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">is_removable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">childCount</span><span class="p">()):</span>
+                <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">filepath</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">Session</span><span class="o">.</span><span class="n">EXT</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">SessionTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">filepath</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">EXT</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">SceneTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">seen</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="k">class</span> <span class="nc">SceneTreeWidgetItem</span><span class="p">(</span><span class="n">SessionTreeWidgetItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param object: Scene</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SceneTreeWidgetItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;visible&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="c1"># for GL selection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="c1"># color indicator delegate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">setItemWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">treeWidget</span><span class="p">()</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="mf">500.0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">color</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the color indicator delegate in the tree widget item.</span>
+
+<span class="sd">        :param color: QColor object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># normalize color values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">red</span><span class="p">()</span> <span class="o">/</span> <span class="mf">500.0</span><span class="p">,</span> 
+                   <span class="n">color</span><span class="o">.</span><span class="n">green</span><span class="p">()</span> <span class="o">/</span> <span class="mf">500.0</span><span class="p">,</span> 
+                   <span class="n">color</span><span class="o">.</span><span class="n">blue</span><span class="p">()</span> <span class="o">/</span> <span class="mf">500.0</span><span class="p">)</span>
+
+        <span class="c1"># update delegate widget stylesheet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background: rgb(</span><span class="si">%.2f</span><span class="s2">, </span><span class="si">%.2f</span><span class="s2">, </span><span class="si">%.2f</span><span class="s2">);&quot;</span> 
+                <span class="o">%</span> <span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">red</span><span class="p">(),</span> <span class="n">color</span><span class="o">.</span><span class="n">green</span><span class="p">(),</span> <span class="n">color</span><span class="o">.</span><span class="n">blue</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">is_removable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">ObjectTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getTop</span><span class="p">())</span>
+
+<span class="c1">## tree Widgets ---------------------------------------------------------------</span>
+<span class="k">class</span> <span class="nc">DeselectableTreeWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidget</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearSelection</span><span class="p">()</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeView</span><span class="o">.</span><span class="n">mousePressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">AbcTreeWidget</span><span class="p">(</span><span class="n">DeselectableTreeWidget</span><span class="p">):</span>
+    <span class="n">DEFAULT_COLUMN_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span>  <span class="p">]</span>
+    <span class="n">DEFAULT_COLUMNS</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">))</span>
+    <span class="n">DEFAULT_COLUMNS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">)))))</span>
+    <span class="n">COLUMNS</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">DEFAULT_COLUMNS</span><span class="p">)</span>
+
+    <span class="n">signal_item_selected</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">signal_item_expanded</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">signal_item_added</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">)</span>
+    <span class="n">signal_item_removed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">)</span>
+    <span class="n">signal_item_clicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">signal_item_doubleclicked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">colnum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLUMNS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">column_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">COLUMNS</span><span class="p">[</span><span class="n">el</span><span class="p">]</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLUMNS</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main</span> <span class="o">=</span> <span class="n">main</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__row_height</span> <span class="o">=</span> <span class="mi">24</span>
+
+        <span class="c1"># reserved for editable item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_item</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># set some default QtTreeWidget values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QSize</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAllColumnsShowFocus</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAnimated</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoScroll</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setUniformRowHeights</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSelectionMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">SingleSelection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDragDropMode</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">NoDragDrop</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setContextMenuPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CustomContextMenu</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_header</span><span class="p">()</span>
+
+        <span class="c1">#TODO: refactor all this event handling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;itemSelectionChanged ()&quot;</span><span class="p">),</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_item_selected</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;itemClicked (QTreeWidgetItem *, int)&quot;</span><span class="p">),</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_item_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;itemDoubleClicked (QTreeWidgetItem *, int)&quot;</span><span class="p">),</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_item_double_clicked</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;itemExpanded (QTreeWidgetItem *)&quot;</span><span class="p">),</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_item_expanded</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;customContextMenuRequested (const QPoint&amp;)&quot;</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_context_menu</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">init_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">COLUMNS</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_COLUMNS</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_header</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSortingEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sortByColumn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">),</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DescendingOrder</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setup_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COLUMNS</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHeaderLabels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">),</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">),</span> <span class="mi">75</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="mi">300</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_row_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__row_height</span>
+
+    <span class="k">def</span> <span class="nf">_set_row_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__row_height</span> <span class="o">=</span> <span class="n">h</span>
+
+    <span class="n">row_height</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_row_height</span><span class="p">,</span> <span class="n">_set_row_height</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Tree item row height&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">handle_item_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Item selected handler (select can happen with click or arrow keys).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_item_clicked</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">handle_item_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Item click handler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollToItem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">EnsureVisible</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;itemClicked (PyQt_PyObject)&#39;</span><span class="p">),</span> 
+                    <span class="n">item</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="n">SceneTreeWidgetItem</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">checkState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">unload</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">handle_item_double_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Item double-click handler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">SceneTreeWidgetItem</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_item</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="n">editor</span> <span class="o">=</span> <span class="n">SceneLineEditor</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1">#validator = QtGui.QValidator(QtCore.QRegExp(&quot;&quot;))</span>
+        <span class="c1">#editor.setValidator(validator)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setItemWidget</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">editor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s1">&#39;itemDoubleClicked (PyQt_PyObject)&#39;</span><span class="p">),</span> 
+                <span class="n">item</span><span class="p">)</span>
+        <span class="n">editor</span><span class="o">.</span><span class="n">textEdited</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_name_change</span><span class="p">)</span>
+        <span class="n">editor</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_done_editing</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_name_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles text change for item delegate line edits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">toAscii</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item</span> <span class="ow">and</span> <span class="n">name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_item</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_done_editing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Line edit delegate done editing handler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">removeItemWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">handle_item_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;implement in subclass&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns selected item&#39;s object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">selected</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span> <span class="o">==</span> <span class="n">SessionTreeWidgetItem</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">selected</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span> <span class="o">==</span> <span class="n">SceneTreeWidgetItem</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">selected</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">getTop</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">selected</span><span class="o">.</span><span class="n">object</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Searches each top level item for name, starting with</span>
+<span class="sd">        nodes under /ABC, the top</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearSelection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topLevelItemCount</span><span class="p">()):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topLevelItem</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">while</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ObjectTreeWidgetItem</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="nb">object</span> <span class="ow">in</span> <span class="n">find_objects</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">object</span><span class="o">.</span><span class="n">getFullName</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="p">]</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="k">while</span> <span class="n">parts</span><span class="p">:</span>
+                    <span class="n">part</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">childCount</span><span class="p">()):</span>
+                        <span class="n">child</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                        <span class="n">check</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)))</span>
+                        <span class="k">if</span> <span class="n">part</span> <span class="o">==</span> <span class="n">check</span><span class="p">:</span>
+                            <span class="n">child</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                            <span class="n">item</span> <span class="o">=</span> <span class="n">child</span>
+                            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+                            <span class="k">break</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">child</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                            <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="n">found</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scrollToItem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAbstractItemView</span><span class="o">.</span><span class="n">PositionAtCenter</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">setExpanded</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setItemSelected</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ObjectTreeWidget</span><span class="p">(</span><span class="n">AbcTreeWidget</span><span class="p">):</span>
+    <span class="n">DEFAULT_COLUMN_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;hidden&#39;</span><span class="p">,</span> <span class="p">]</span>
+    <span class="n">DEFAULT_COLUMNS</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">))</span>
+    <span class="n">DEFAULT_COLUMNS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">)))))</span>
+    <span class="n">COLUMNS</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">DEFAULT_COLUMNS</span><span class="p">)</span>
+
+    <span class="c1"># signal for viewing through selected camera</span>
+    <span class="n">signal_view_camera</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">AbcTreeWidgetItem</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ObjectTreeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHorizontalScrollBarPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ScrollBarAsNeeded</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setup_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COLUMNS</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHeaderLabels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="mi">150</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="mi">25</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionHidden</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">),</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">setStretchLastSection</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">handle_import</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        removes an item from the tree and session.</span>
+
+<span class="sd">        :param: objecttreewidgetitem or subclass.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">():</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">is_removable</span><span class="p">():</span>
+            <span class="n">message</span><span class="p">(</span><span class="s2">&quot;Item is not removable&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takeTopLevelItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indexOfTopLevelItem</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_item_removed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">triggered</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        remove item action handler, calls remove_item().</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">handle_item_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">seen</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">seen</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">handle_set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ok</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set item color menu handler</span>
+
+<span class="sd">        :param item: SceneTreeWidgetItem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QColorDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">color</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">rgba</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">getRgba</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ok</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="n">SceneTreeWidgetItem</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="n">rgba</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">handle_set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set item shading mode menu handler</span>
+
+<span class="sd">        :param mode: abcview.io.Mode enum value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">():</span> <span class="c1"># via menu action </span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">()</span><span class="o">.</span><span class="n">toInt</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span> 
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ArrowCursor</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_duplicate_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">view_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        view through selected camera</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">camera</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_view_camera</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        tree widget context menu handler</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectedItems</span><span class="p">()</span>
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">items</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Add&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_action</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;triggered (bool)&quot;</span><span class="p">),</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">)</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_action</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">SceneTreeWidgetItem</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># color picker</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Color&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_action</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;triggered (bool)&quot;</span><span class="p">),</span> 
+                        <span class="bp">self</span><span class="o">.</span><span class="n">handle_set_color</span><span class="p">)</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_action</span><span class="p">)</span>
+
+            <span class="c1"># shading toggle menu item</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">(</span><span class="s2">&quot;Shading&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">shading_group</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QActionGroup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">clearAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Clear&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clearAct</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clearAct</span><span class="o">.</span><span class="n">setActionGroup</span><span class="p">(</span><span class="n">shading_group</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clearAct</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clearAct</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clearAct</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_set_mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clearAct</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">offAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Off&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="c1">#self.offAct.setShortcut(&quot;0&quot;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offAct</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offAct</span><span class="o">.</span><span class="n">setActionGroup</span><span class="p">(</span><span class="n">shading_group</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offAct</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Mode</span><span class="o">.</span><span class="n">OFF</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offAct</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">Mode</span><span class="o">.</span><span class="n">OFF</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offAct</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_set_mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offAct</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">fillAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Fill&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="c1">#self.fillAct.setShortcut(&quot;1&quot;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fillAct</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fillAct</span><span class="o">.</span><span class="n">setActionGroup</span><span class="p">(</span><span class="n">shading_group</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fillAct</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Mode</span><span class="o">.</span><span class="n">FILL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fillAct</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">Mode</span><span class="o">.</span><span class="n">FILL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fillAct</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_set_mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fillAct</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Line&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="c1">#self.lineAct.setShortcut(&quot;2&quot;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineAct</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineAct</span><span class="o">.</span><span class="n">setActionGroup</span><span class="p">(</span><span class="n">shading_group</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineAct</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Mode</span><span class="o">.</span><span class="n">LINE</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineAct</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">Mode</span><span class="o">.</span><span class="n">LINE</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineAct</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_set_mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineAct</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Point &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="c1">#self.pointAct.setShortcut(&quot;3&quot;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointAct</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointAct</span><span class="o">.</span><span class="n">setActionGroup</span><span class="p">(</span><span class="n">shading_group</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointAct</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Mode</span><span class="o">.</span><span class="n">POINT</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointAct</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">Mode</span><span class="o">.</span><span class="n">POINT</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointAct</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_set_mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pointAct</span><span class="p">)</span>
+           
+            <span class="bp">self</span><span class="o">.</span><span class="n">bboxAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Bounds &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="c1">#self.bboxAct.setShortcut(&quot;4&quot;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bboxAct</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bboxAct</span><span class="o">.</span><span class="n">setActionGroup</span><span class="p">(</span><span class="n">shading_group</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bboxAct</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="n">Mode</span><span class="o">.</span><span class="n">BOUNDS</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bboxAct</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">Mode</span><span class="o">.</span><span class="n">BOUNDS</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bboxAct</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_set_mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bboxAct</span><span class="p">)</span>
+
+            <span class="n">menu</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shading_menu</span><span class="p">)</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
+
+            <span class="c1"># hide/show</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">loaded</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">load_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Hide&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">load_action</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;triggered (bool)&quot;</span><span class="p">),</span> 
+                        <span class="n">item</span><span class="o">.</span><span class="n">unload</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">load_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Show&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">load_action</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;triggered (bool)&quot;</span><span class="p">),</span> 
+                        <span class="n">item</span><span class="o">.</span><span class="n">load</span><span class="p">)</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">load_action</span><span class="p">)</span>
+
+            <span class="c1"># duplicate scene</span>
+            <span class="c1">#self.duplicate_action = QtGui.QAction(&quot;Duplicate&quot;, self)</span>
+            <span class="c1">#self.connect(self.duplicate_action, QtCore.SIGNAL(&quot;triggered (bool)&quot;), </span>
+            <span class="c1">#            self.handle_duplicate_item)</span>
+            <span class="c1">#menu.addAction(self.duplicate_action)</span>
+
+            <span class="c1"># remove scene</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Remove&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remove_action</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;triggered (bool)&quot;</span><span class="p">),</span> 
+                        <span class="bp">self</span><span class="o">.</span><span class="n">handle_remove_item</span><span class="p">)</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remove_action</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="n">CameraTreeWidgetItem</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">view_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Look through selected&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view_action</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;triggered (bool)&quot;</span><span class="p">),</span> 
+                        <span class="bp">self</span><span class="o">.</span><span class="n">view_camera</span><span class="p">)</span>
+                <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view_action</span><span class="p">)</span>
+
+        <span class="n">menu</span><span class="o">.</span><span class="n">popup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">PropertyTreeWidget</span><span class="p">(</span><span class="n">AbcTreeWidget</span><span class="p">):</span>
+    <span class="n">DEFAULT_COLUMN_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="p">]</span>
+    <span class="n">DEFAULT_COLUMNS</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">))</span>
+    <span class="n">DEFAULT_COLUMNS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">)))))</span>
+    <span class="n">COLUMNS</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">DEFAULT_COLUMNS</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PropertyTreeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setup_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COLUMNS</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setHeaderLabels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">resizeSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span> <span class="mi">150</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">()</span><span class="o">.</span><span class="n">hideSection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">show_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="n">SceneTreeWidgetItem</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">alembic</span><span class="o">.</span><span class="n">Abc</span><span class="o">.</span><span class="n">GetArchiveInfo</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">archive</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addTopLevelItem</span><span class="p">(</span><span class="n">ScenePropertyTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">properties</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addTopLevelItem</span><span class="p">(</span><span class="n">ScenePropertyTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">property</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">properties</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addTopLevelItem</span><span class="p">(</span><span class="n">PropertyTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">property</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">handle_item_expanded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">seen</span><span class="p">:</span>
+            <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">properties</span><span class="p">():</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">PropertyTreeWidgetItem</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">property</span><span class="p">))</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">seen</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="k">class</span> <span class="nc">SampleTreeWidget</span><span class="p">(</span><span class="n">AbcTreeWidget</span><span class="p">):</span>
+    <span class="n">DEFAULT_COLUMN_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="p">]</span>
+    <span class="n">DEFAULT_COLUMNS</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">))</span>
+    <span class="n">DEFAULT_COLUMNS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">)))))</span>
+    <span class="n">COLUMNS</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">DEFAULT_COLUMNS</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SampleTreeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRootIsDecorated</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">show_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">samples</span><span class="p">())):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sample</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">samples</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span>
+                <span class="n">valid</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">tooltip</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">valid</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">tooltip</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">sample</span> <span class="o">=</span> <span class="s2">&quot;[Error: </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">sample_item</span> <span class="o">=</span> <span class="n">SampleTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+            <span class="n">sample_item</span><span class="o">.</span><span class="n">valid</span> <span class="o">=</span> <span class="n">valid</span>
+            <span class="n">sample_item</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">tooltip</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addTopLevelItem</span><span class="p">(</span><span class="n">sample_item</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ArrayTreeWidget</span><span class="p">(</span><span class="n">AbcTreeWidget</span><span class="p">):</span>
+    <span class="n">DEFAULT_COLUMN_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="p">]</span>
+    <span class="n">DEFAULT_COLUMNS</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">))</span>
+    <span class="n">DEFAULT_COLUMNS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">DEFAULT_COLUMN_NAMES</span><span class="p">)))))</span>
+    <span class="n">COLUMNS</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">DEFAULT_COLUMNS</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ArrayTreeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">main</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRootIsDecorated</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">row_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">array_tree</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_height</span><span class="p">)</span> <span class="o">+</span> <span class="mi">20</span>
+
+    <span class="k">def</span> <span class="nf">get_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="n">ArrayThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">_get_object</span><span class="p">(),</span> <span class="n">first</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s2">&quot;arrayValue (PyQt_PyObject)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_add_value</span><span class="p">)</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">show_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item</span> <span class="o">=</span> <span class="n">array</span>
+        <span class="k">if</span> <span class="n">array</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_rows</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_count</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">handle_add_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indexValue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">indexValue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addTopLevelItem</span><span class="p">(</span><span class="n">ArrayTreeWidgetItem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+    <span class="c1">## base class overrides</span>
+
+    <span class="k">def</span> <span class="nf">wheelEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indexAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viewport</span><span class="p">()</span><span class="o">.</span><span class="n">rect</span><span class="p">()</span><span class="o">.</span><span class="n">bottomLeft</span><span class="p">())</span>
+        <span class="n">lastRow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lastRow</span><span class="p">:</span>
+            <span class="n">lastIndex</span> <span class="o">=</span> <span class="n">lastRow</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnum</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">_get_object</span><span class="p">())</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">lastIndex</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_rows</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_count</span><span class="p">())</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AbcTreeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">wheelEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2012-2016, Sony Pictures Imageworks Inc. and Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

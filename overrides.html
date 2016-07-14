@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hierarchical Assets Example &mdash; AbcView 1.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="AbcView 1.1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AbcView
+          
+
+          
+            
+            <img src="_static/abcview.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Hierarchical Assets Example</a><ul>
+<li><a class="reference internal" href="#step-1">Step 1</a></li>
+<li><a class="reference internal" href="#step-2">Step 2</a></li>
+<li><a class="reference internal" href="#step-3">Step 3</a></li>
+<li><a class="reference internal" href="#step-4">Step 4</a></li>
+<li><a class="reference internal" href="#step-5">Step 5</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">AbcView</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Hierarchical Assets Example</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/overrides.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hierarchical-assets-example">
+<span id="overrides"></span><h1>Hierarchical Assets Example<a class="headerlink" href="#hierarchical-assets-example" title="Permalink to this headline">¶</a></h1>
+<p>This doc attempts to demonstrate how to construct a simple heirarchical asset,
+with instances and contextual overrides. We&#8217;ll create a simple environment
+asset composed of smaller subassets. In this case, a living room with a couch,
+coffee table, and side tables with lamps.</p>
+<div class="section" id="step-1">
+<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">abcview.io</span> <span class="k">import</span> <span class="n">Session</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;lamp.abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;sidetable.abc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note: this is the same as loading both of these abc files into AbcView</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ abcview lamp.abc sidetable.abc
+</pre></div>
+</div>
+<p>Translate the lamp scene up on the y-axis and save the session</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;step1.io&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load the session file into AbcView</p>
+<img alt="_images/step1.png" class="align-center" src="_images/step1.png" />
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ abcview step1.io
+</pre></div>
+</div>
+<p>Note: you can also move the lamp on top of the table using the properties widget:
+(ctrl+shift+p or Widgets-&gt;Properties), select the lamp, then
+double-click the translate value and enter 0, 2, 0
+and hit enter.</p>
+</div>
+<div class="section" id="step-2">
+<h2>Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline">¶</a></h2>
+<p>Load an instance of the couch and loveseat assets into a new session, and translate
+them</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;couch.abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;loveseat.abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rotate</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rotate</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;step2.io&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It should look like this</p>
+<img alt="_images/step2.png" class="align-center" src="_images/step2.png" />
+</div>
+<div class="section" id="step-3">
+<h2>Step 3<a class="headerlink" href="#step-3" title="Permalink to this headline">¶</a></h2>
+<p>Now let&#8217;s load two instances of the step1.io compound asset created in Step 1,
+and give them new names</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;step1.io&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;step1.io&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;LAMP1&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;LAMP2&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;step3.io&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Loading step3.io into AbcView it should look like this</p>
+<img alt="_images/step3.png" class="align-center" src="_images/step3.png" />
+</div>
+<div class="section" id="step-4">
+<h2>Step 4<a class="headerlink" href="#step-4" title="Permalink to this headline">¶</a></h2>
+<p>Instance the step2.io asset, the step3.io asset and the coffee table asset</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;step2.io&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;step3.io&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;coffeetable.abc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then change the position of the coffee table</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">rotate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, let&#8217;s move lamps next to the couch in this scene by settings its translate
+property using contextual overrides, and save the scene</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">add_override</span><span class="p">(</span><span class="s2">&quot;translate&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">add_override</span><span class="p">(</span><span class="s2">&quot;translate&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;step4.io&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You should have a scene that looks like this</p>
+<img alt="_images/step4.png" class="align-center" src="_images/step4.png" />
+</div>
+<div class="section" id="step-5">
+<h2>Step 5<a class="headerlink" href="#step-5" title="Permalink to this headline">¶</a></h2>
+<p>Now go back to the step1.io asset and change the height of the lamp, and it should
+get updated in any compound assets that reference it</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="s2">&quot;step1.io&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Re-open the step4.io asset and you should see both lamps are now shorter</p>
+<img alt="_images/step5.png" class="align-center" src="_images/step5.png" />
+<p>These are just simple examples, but any property, TRS values or arbitrary attributes, can
+have a contextual override in referencing session files.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2012-2016, Sony Pictures Imageworks Inc. and Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

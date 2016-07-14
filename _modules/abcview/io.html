@@ -1,0 +1,1012 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>abcview.io &mdash; AbcView 1.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="AbcView 1.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AbcView
+          
+
+          
+            
+            <img src="../../_static/abcview.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">AbcView</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>abcview.io</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for abcview.io</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+<span class="c1">#-******************************************************************************</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2012-2013,</span>
+<span class="c1">#  Sony Pictures Imageworks Inc. and</span>
+<span class="c1">#  Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd.</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without</span>
+<span class="c1"># modification, are permitted provided that the following conditions are</span>
+<span class="c1"># met:</span>
+<span class="c1"># *       Redistributions of source code must retain the above copyright</span>
+<span class="c1"># notice, this list of conditions and the following disclaimer.</span>
+<span class="c1"># *       Redistributions in binary form must reproduce the above</span>
+<span class="c1"># copyright notice, this list of conditions and the following disclaimer</span>
+<span class="c1"># in the documentation and/or other materials provided with the</span>
+<span class="c1"># distribution.</span>
+<span class="c1"># *       Neither the name of Sony Pictures Imageworks, nor</span>
+<span class="c1"># Industrial Light &amp; Magic, nor the names of their contributors may be used</span>
+<span class="c1"># to endorse or promote products derived from this software without specific</span>
+<span class="c1"># prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS</span>
+<span class="c1"># &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT</span>
+<span class="c1"># LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span>
+<span class="c1"># A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT</span>
+<span class="c1"># OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<span class="c1"># SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</span>
+<span class="c1"># LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span>
+<span class="c1"># DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span>
+<span class="c1"># THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="c1"># (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c1"># OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c1">#</span>
+<span class="c1">#-******************************************************************************</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">imath</span>
+<span class="kn">import</span> <span class="nn">alembic</span>
+<span class="kn">from</span> <span class="nn">abcview</span> <span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">abcview.utils</span> <span class="kn">import</span> <span class="n">get_object</span>
+<span class="kn">from</span> <span class="nn">abcview.utils</span> <span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">The IO module handles serialization and deserialization of the assembled </span>
+<span class="s2">scenes and sessions. The hierarchy structure basically consists of a </span>
+<span class="s2">top-level Session object that contains children items which can be either</span>
+<span class="s2">Scenes, Sessions, Cameras or ICAmeras. Each item in the hierarchy has</span>
+<span class="s2">a properties attribute for storing custom attributes. Only Scenes and ICameras</span>
+<span class="s2">reference Alembic archives. </span>
+
+<span class="s2">Session hierarchy: ::</span>
+
+<span class="s2">   Session</span>
+<span class="s2">       |- Properties</span>
+<span class="s2">       |- Cameras</span>
+<span class="s2">       `- Items</span>
+<span class="s2">             `- Scene</span>
+<span class="s2">                  |- Properties</span>
+<span class="s2">                  `- file.abc</span>
+
+<span class="s2">Sessions can also reference other session files.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Scene&quot;</span><span class="p">,</span> <span class="s2">&quot;Session&quot;</span><span class="p">,</span> <span class="s2">&quot;Camera&quot;</span><span class="p">,</span> <span class="s2">&quot;ICamera&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;AbcViewError&quot;</span><span class="p">,</span> <span class="s2">&quot;Mode&quot;</span><span class="p">,</span> <span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">Mode</span><span class="p">:</span>
+    <span class="n">OFF</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">BOUNDS</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">POINT</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">LINE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">FILL</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="k">class</span> <span class="nc">AbcViewError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">DictListUpdate</span><span class="p">(</span> <span class="n">lis1</span><span class="p">,</span> <span class="n">lis2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">aLis1</span> <span class="ow">in</span> <span class="n">lis1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">aLis1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lis2</span><span class="p">:</span>
+            <span class="n">lis2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aLis1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lis2</span>
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;implement in subclass&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;implement in subclass&quot;</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_name</span><span class="p">,</span> <span class="n">_set_name</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span>
+
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;must be implemented in a subclass&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;must be implemented in a subclass&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">FileBase</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">SERIALIZE</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">EXT</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FileBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__filepath</span> <span class="o">=</span> <span class="n">filepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="s2">&quot;Unnamed&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">is_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileext</span> <span class="o">==</span> <span class="n">Scene</span><span class="o">.</span><span class="n">EXT</span>
+
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span>
+
+    <span class="k">def</span> <span class="nf">_set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_name</span><span class="p">,</span> <span class="n">_set_name</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_filepath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filepath</span>
+
+    <span class="k">def</span> <span class="nf">_set_filepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__filepath</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="n">filepath</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_filepath</span><span class="p">,</span> <span class="n">_set_filepath</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;file path&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_filetype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+
+    <span class="k">def</span> <span class="nf">_set_filetype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;File type is immutable&quot;</span><span class="p">)</span>
+
+    <span class="n">filetype</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_filetype</span><span class="p">,</span> <span class="n">_set_filetype</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;file type&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_fileext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">_set_fileext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;File ext is immutable&quot;</span><span class="p">)</span>
+
+    <span class="n">fileext</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_fileext</span><span class="p">,</span> <span class="n">_set_fileext</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;file extension&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="Scene"><a class="viewcode-back" href="../../modules.html#abcview.io.Scene">[docs]</a><span class="k">class</span> <span class="nc">Scene</span><span class="p">(</span><span class="n">FileBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a single item in an AbcView file </span>
+<span class="sd">    (either .abc or .io file) </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">EXT</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Scene</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+       
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="c1">## some convenience properties</span>
+
+    <span class="k">def</span> <span class="nf">_get_translate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;translate&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_set_translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;translate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">translate</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_translate</span><span class="p">,</span> <span class="n">_set_translate</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;translate property&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rotate&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_set_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;rotate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">rotate</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_rotate</span><span class="p">,</span> <span class="n">_set_rotate</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;rotation property&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_set_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_scale</span><span class="p">,</span> <span class="n">_set_scale</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;scale property&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">mode</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_mode</span><span class="p">,</span> <span class="n">_set_mode</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;GL polygon mode property&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">color</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_color</span><span class="p">,</span> <span class="n">_set_color</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;color to display in viewer&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;filepath&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span>
+            <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span>
+            <span class="s2">&quot;loaded&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Scene.deserialize"><a class="viewcode-back" href="../../modules.html#abcview.io.Scene.deserialize">[docs]</a>    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deserializes an Alembic scene from json data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filepath&quot;</span><span class="p">))</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;Unnamed&quot;</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;loaded&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;properties&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="k">return</span> <span class="n">item</span></div></div>
+
+<span class="k">class</span> <span class="nc">CameraBase</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for camera objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">name</span>
+        
+        <span class="c1"># draw toggles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__auto_frame</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_bounds</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_hud</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_labels</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_grid</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_normals</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_mode</span> <span class="o">=</span> <span class="n">Mode</span><span class="o">.</span><span class="n">LINE</span>
+
+        <span class="c1"># fixed aspect ratio toggle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fixed</span> <span class="o">=</span> <span class="bp">False</span>
+        
+        <span class="c1"># draw visible objects only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__visible</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__name</span>
+
+    <span class="k">def</span> <span class="nf">_set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__name</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_name</span><span class="p">,</span> <span class="n">_set_name</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Camera name&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_draw_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_grid</span>
+
+    <span class="k">def</span> <span class="nf">_set_draw_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_grid</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_grid</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_grid</span>
+
+    <span class="n">draw_grid</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_draw_grid</span><span class="p">,</span> <span class="n">_set_draw_grid</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;draw the scene grid&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_draw_normals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_normals</span>
+
+    <span class="k">def</span> <span class="nf">_set_draw_normals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_normals</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_normals</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_normals</span>
+
+    <span class="n">draw_normals</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_draw_normals</span><span class="p">,</span> <span class="n">_set_draw_normals</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;draw normals&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_draw_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_bounds</span>
+
+    <span class="k">def</span> <span class="nf">_set_draw_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_bounds</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_bounds</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_bounds</span>
+
+    <span class="n">draw_bounds</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_draw_bounds</span><span class="p">,</span> <span class="n">_set_draw_bounds</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;draw bounding boxes&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_draw_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_labels</span>
+    
+    <span class="k">def</span> <span class="nf">_set_draw_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_labels</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_labels</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_labels</span>
+
+    <span class="n">draw_labels</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_draw_labels</span><span class="p">,</span> <span class="n">_set_draw_labels</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;draw scene labels&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_draw_hud</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_hud</span>
+    
+    <span class="k">def</span> <span class="nf">_set_draw_hud</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_hud</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__draw_hud</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_hud</span>
+
+    <span class="n">draw_hud</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_draw_hud</span><span class="p">,</span> <span class="n">_set_draw_hud</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;draw hud info&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_auto_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__auto_frame</span>
+    
+    <span class="k">def</span> <span class="nf">_set_auto_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__auto_frame</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__auto_frame</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auto_frame</span>
+
+    <span class="n">auto_frame</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_auto_frame</span><span class="p">,</span> <span class="n">_set_auto_frame</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;automatically frame scene or selected&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_draw_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__draw_mode</span>
+
+    <span class="k">def</span> <span class="nf">_set_draw_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__draw_mode</span> <span class="o">=</span> <span class="n">mode</span>
+
+    <span class="n">mode</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_draw_mode</span><span class="p">,</span> <span class="n">_set_draw_mode</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;global drawing mode&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_fixed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fixed</span>
+    
+    <span class="k">def</span> <span class="nf">_set_fixed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__fixed</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__fixed</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fixed</span>
+
+    <span class="n">fixed</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_fixed</span><span class="p">,</span> <span class="n">_set_fixed</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;draw fixed aspect ratio&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__visible</span>
+    
+    <span class="k">def</span> <span class="nf">_set_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__visible</span> <span class="o">=</span> <span class="n">force</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__visible</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__visible</span>
+
+    <span class="n">visible</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_visible</span><span class="p">,</span> <span class="n">_set_visible</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;draw visible objects only&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Camera"><a class="viewcode-back" href="../../modules.html#abcview.io.Camera">[docs]</a><span class="k">class</span> <span class="nc">Camera</span><span class="p">(</span><span class="n">CameraBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    AbcView API Camera object. Camera attributes are not</span>
+<span class="sd">    animatable as opposed to Alembic ICamera attributes.</span>
+
+<span class="sd">    Acting de/serialization layer for GLCamera objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">SERIALIZE</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;translation&quot;</span><span class="p">,</span> <span class="s2">&quot;rotation&quot;</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="s2">&quot;aspect_ratio&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;fovx&quot;</span><span class="p">,</span> <span class="s2">&quot;fovy&quot;</span><span class="p">,</span> <span class="s2">&quot;near&quot;</span><span class="p">,</span> <span class="s2">&quot;far&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="s2">&quot;fixed&quot;</span><span class="p">,</span> <span class="s2">&quot;mode&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;draw_hud&quot;</span><span class="p">,</span> <span class="s2">&quot;draw_grid&quot;</span><span class="p">,</span> <span class="s2">&quot;draw_normals&quot;</span><span class="p">,</span> <span class="s2">&quot;draw_bounds&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;draw_labels&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;loaded&quot;</span><span class="p">,</span> <span class="s2">&quot;visible&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">loaded</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param name: camera name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Camera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="n">loaded</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Camera&quot;</span>
+
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SERIALIZE</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;translation&quot;</span><span class="p">,</span> <span class="s2">&quot;rotation&quot;</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">]:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">val</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">cam</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+                  <span class="n">loaded</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;loaded&quot;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">SERIALIZE</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;translation&quot;</span><span class="p">,</span> <span class="s2">&quot;rotation&quot;</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">]:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="o">*</span><span class="n">val</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">cam</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cam</span></div>
+
+<div class="viewcode-block" id="ICamera"><a class="viewcode-back" href="../../modules.html#abcview.io.ICamera">[docs]</a><span class="k">class</span> <span class="nc">ICamera</span><span class="p">(</span><span class="n">CameraBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Alembic ICamera de/serialization wrapper class. Use this class</span>
+<span class="sd">    for loading Alembic ICameras.</span>
+
+<span class="sd">    Setting up a basic scene with a camera ::</span>
+<span class="sd">        </span>
+<span class="sd">        # imports</span>
+<span class="sd">        &gt;&gt;&gt; from abcview.io import Session, ICamera</span>
+<span class="sd">        &gt;&gt;&gt; from abcview.utils import get_object</span>
+
+<span class="sd">        # create session, add scene file</span>
+<span class="sd">        &gt;&gt;&gt; session = Session()</span>
+<span class="sd">        &gt;&gt;&gt; session.add_file(&quot;scene.abc&quot;)</span>
+
+<span class="sd">        # add icamera wrapped in ICamera IO class</span>
+<span class="sd">        &gt;&gt;&gt; session.add_camera(ICamera(get_object(&quot;shotcam.abc&quot;, </span>
+<span class="sd">                                                  &quot;ShotCam&quot;)</span>
+<span class="sd">                                       loaded=True))</span>
+
+<span class="sd">        # save session</span>
+<span class="sd">        &gt;&gt;&gt; session.save(&quot;scene.io&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">SERIALIZE</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span> <span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;draw_hud&quot;</span><span class="p">,</span> <span class="s2">&quot;draw_grid&quot;</span><span class="p">,</span> <span class="s2">&quot;draw_normals&quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;draw_labels&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;loaded&quot;</span><span class="p">,</span> <span class="s2">&quot;draw_bounds&quot;</span><span class="p">,</span> <span class="s2">&quot;visible&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icamera</span><span class="p">,</span> <span class="n">loaded</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param icamera: Alembic ICamera object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span> <span class="o">=</span> <span class="n">icamera</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="n">loaded</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__schema</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ICamera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ICamera&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_not_settable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;ICamera name is immutable&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_name</span><span class="p">,</span> <span class="n">_not_settable</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Camera name&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span> <span class="o">=</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">ICamera</span><span class="p">(</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span><span class="o">.</span><span class="n">getParent</span><span class="p">(),</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__schema</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span><span class="o">.</span><span class="n">getSchema</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__schema</span>
+
+    <span class="k">def</span> <span class="nf">_ixform_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns icamera&#39;s parent xform sample</span>
+
+<span class="sd">        :param seconds: time in secs (derives index)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span>
+        <span class="n">xform</span> <span class="o">=</span> <span class="n">alembic</span><span class="o">.</span><span class="n">AbcGeom</span><span class="o">.</span><span class="n">IXform</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">getParent</span><span class="p">(),</span> 
+                                       <span class="n">cp</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="n">xform</span><span class="o">.</span><span class="n">getSchema</span><span class="p">()</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">xs</span><span class="o">.</span><span class="n">getTimeSampling</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">getNearIndex</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> 
+                                <span class="n">xs</span><span class="o">.</span><span class="n">getNumSamples</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">xs</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_icamera_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns icamera&#39;s sample</span>
+<span class="sd">        </span>
+<span class="sd">        :param seconds: time in secs (derives index)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">()</span><span class="o">.</span><span class="n">getTimeSampling</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">getNearIndex</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> 
+                                <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">()</span><span class="o">.</span><span class="n">getNumSamples</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">()</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">translation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ixform_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">getTranslation</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">samp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ixform_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">imath</span><span class="o">.</span><span class="n">V3d</span><span class="p">(</span><span class="n">samp</span><span class="o">.</span><span class="n">getXRotation</span><span class="p">(),</span> <span class="n">samp</span><span class="o">.</span><span class="n">getYRotation</span><span class="p">(),</span> 
+                    <span class="n">samp</span><span class="o">.</span><span class="n">getZRotation</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ixform_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">getScale</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">near</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icamera_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">getNearClippingPlane</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">far</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icamera_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">getFarClippingPlane</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">fovx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icamera_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">getFieldOfView</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ICamera.aspect_ratio"><a class="viewcode-back" href="../../modules.html#abcview.io.ICamera.aspect_ratio">[docs]</a>    <span class="k">def</span> <span class="nf">aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        From Alembic/AbcGeom/CameraSample.h:</span>
+<span class="sd">   </span>
+<span class="sd">        The amount the camera&#39;s lens compresses the image horizontally</span>
+<span class="sd">        (width / height aspect ratio)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">samp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icamera_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">samp</span><span class="o">.</span><span class="n">getHorizontalAperture</span><span class="p">()</span> <span class="o">/</span> <span class="n">samp</span><span class="o">.</span><span class="n">getVerticalAperture</span><span class="p">())</span> \
+                 <span class="o">*</span> <span class="n">samp</span><span class="o">.</span><span class="n">getLensSqueezeRatio</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">screen_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">win</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icamera_sample</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">getScreenWindow</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">win</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">],</span> <span class="n">win</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">],</span> <span class="n">win</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">],</span> <span class="n">win</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;filepath&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span><span class="o">.</span><span class="n">getArchive</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span> 
+            <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">icamera</span><span class="o">.</span><span class="n">getFullName</span><span class="p">(),</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SERIALIZE</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">cam</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">get_object</span><span class="p">(</span>
+                       <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filepath&quot;</span><span class="p">),</span>
+                       <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fullname&quot;</span><span class="p">)</span>
+                   <span class="p">),</span>
+                   <span class="n">loaded</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;loaded&quot;</span><span class="p">)</span>
+               <span class="p">)</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">SERIALIZE</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">cam</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cam</span></div>
+
+<div class="viewcode-block" id="Session"><a class="viewcode-back" href="../../modules.html#abcview.io.Session">[docs]</a><span class="k">class</span> <span class="nc">Session</span><span class="p">(</span><span class="n">FileBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    AbcView API Session object. Top level container layer that holds</span>
+<span class="sd">    properties and child session or scene objects.</span>
+
+<span class="sd">    De/serialization layer for AbcView sessions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">EXT</span> <span class="o">=</span> <span class="s2">&quot;io&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Session</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span> 
+        <span class="k">if</span> <span class="n">filepath</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">]:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Scene</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">filepath</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">filepath</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__items</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__items</span>
+    
+    <span class="k">def</span> <span class="nf">_set_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Use add_item() or add_file()&quot;</span><span class="p">)</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_items</span><span class="p">,</span> <span class="n">_set_items</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;child items&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_cameras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">camera</span> <span class="k">for</span> <span class="n">camera</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    
+    <span class="k">def</span> <span class="nf">_set_cameras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Use add_camera()&quot;</span><span class="p">)</span>
+
+    <span class="n">cameras</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_cameras</span><span class="p">,</span> <span class="n">_set_cameras</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;cameras&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Session.add_item"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds and item to the session</span>
+
+<span class="sd">        :param item: Scene or Session object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.add_item] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+        <span class="n">found_instances</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">filepath</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">filepath</span> <span class="o">==</span> <span class="n">item</span><span class="o">.</span><span class="n">filepath</span><span class="p">]</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_instances</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Session.remove_item"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.remove_item">[docs]</a>    <span class="k">def</span> <span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes an item from the session</span>
+
+<span class="sd">        :param item: Scene or Session object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.remove_item] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__items</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__items</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Item not in session: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Session.add_file"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.add_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a filepath to the session</span>
+
+<span class="sd">        :param filepath: path to file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.add_file] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">filepath</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EXT</span><span class="p">):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">filepath</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">EXT</span><span class="p">):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Scene</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AbcViewError</span><span class="p">(</span><span class="s2">&quot;Unsupported file type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="Session.add_camera"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.add_camera">[docs]</a>    <span class="k">def</span> <span class="nf">add_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param: GLCamera</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.add_camera] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">camera</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="p">[</span><span class="n">camera</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">camera</span></div>
+
+<div class="viewcode-block" id="Session.remove_camera"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.remove_camera">[docs]</a>    <span class="k">def</span> <span class="nf">remove_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param: GLCamera</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.remove_camera] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">camera</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="p">[</span><span class="n">camera</span><span class="o">.</span><span class="n">name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Session.set_camera"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.set_camera">[docs]</a>    <span class="k">def</span> <span class="nf">set_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the &quot;active&quot; camera for a given session.</span>
+
+<span class="sd">        :param: GLCamera</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.set_camera] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">camera</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="p">[</span><span class="n">camera</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">camera</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cam</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="p">[</span><span class="n">camera</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="bp">True</span></div>
+
+<div class="viewcode-block" id="Session.serialize"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Serializes the session object to a JSON dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">_serialize</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Session&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;filepath&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> 
+                    <span class="s2">&quot;instance&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span>
+                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s2">&quot;loaded&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">loaded</span><span class="p">,</span>
+                    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">_serialize</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">],</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="Session.is_dirty"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.is_dirty">[docs]</a>    <span class="k">def</span> <span class="nf">is_dirty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change that requires saving.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dirty</span></div>
+
+    <span class="k">def</span> <span class="nf">make_dirty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dirty</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">make_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dirty</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">__version__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">program</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">__prog__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frames_per_second</span> <span class="o">=</span> <span class="mf">24.0</span>
+        
+        <span class="c1"># stores objects that need special handling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__items</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_clean</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Session.merge"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Merges a given session into this session. </span>
+
+<span class="sd">        :param session: Session object to merge in</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">min_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">max_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_time</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">current_time</span>
+       
+        <span class="c1"># merge items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__items</span> <span class="o">=</span> <span class="n">DictListUpdate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">session</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+
+        <span class="c1"># merge cameras</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">cameras</span><span class="p">)</span>
+
+        <span class="c1"># merge properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Session.walk"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.walk">[docs]</a>    <span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursive generator that yields Session, Scene and Camera objects.</span>
+<span class="sd">        Adds a .session attribute to each item.</span>
+
+<span class="sd">        :yield: Session, Scene or Camera objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cameras</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">Session</span><span class="o">.</span><span class="n">type</span><span class="p">():</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="bp">self</span>
+                <span class="k">yield</span> <span class="n">item</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">walk</span><span class="p">():</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">item</span>
+                    <span class="k">yield</span> <span class="n">child</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="bp">self</span>
+                <span class="k">yield</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="Session.load"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads a session .io file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filepath</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span>
+        <span class="k">elif</span> <span class="n">filepath</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AbcViewError</span><span class="p">(</span><span class="s2">&quot;File path not set&quot;</span><span class="p">)</span>
+
+        <span class="c1"># metadata and properties</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">program</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;program&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;properties&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frames_per_second</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;frames_per_second&quot;</span><span class="p">,</span> 
+                           <span class="bp">self</span><span class="o">.</span><span class="n">frames_per_second</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_time&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_time&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_time</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;current_time&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_time</span><span class="p">)</span>
+
+        <span class="c1"># cameras</span>
+        <span class="k">for</span> <span class="n">camera</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cameras&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">camera</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">Camera</span><span class="o">.</span><span class="n">type</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">Camera</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">camera</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">camera</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">ICamera</span><span class="o">.</span><span class="n">type</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">ICamera</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">camera</span><span class="p">))</span>
+
+        <span class="c1"># items</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">):</span>
+            <span class="n">fp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filepath&quot;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">EXT</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">Scene</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">fp</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">Session</span><span class="o">.</span><span class="n">EXT</span><span class="p">):</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Session.save"><a class="viewcode-back" href="../../modules.html#abcview.io.Session.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves a session to a .io file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filepath</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filepath</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AbcViewError</span><span class="p">(</span><span class="s2">&quot;File path not set&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">filepath</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EXT</span><span class="p">):</span>
+            <span class="n">filepath</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">EXT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">.save] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">))</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;app&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;program&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="p">,</span>
+                <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;USER&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;USERNAME&quot;</span><span class="p">)),</span>
+                <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HOST&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HOSTNAME&quot;</span><span class="p">)),</span>
+                <span class="s2">&quot;platform&quot;</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+            <span class="s2">&quot;min_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span><span class="p">,</span>
+            <span class="s2">&quot;max_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span><span class="p">,</span>
+            <span class="s2">&quot;current_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_time</span><span class="p">,</span>
+            <span class="s2">&quot;frames_per_second&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">frames_per_second</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span>
+            <span class="s2">&quot;cameras&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">camera</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span> <span class="k">for</span> <span class="n">camera</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cameras</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span>
+            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2012-2016, Sony Pictures Imageworks Inc. and Industrial Light &amp; Magic, a division of Lucasfilm Entertainment Company Ltd..
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
