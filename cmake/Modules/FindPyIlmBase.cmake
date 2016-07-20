@@ -33,7 +33,7 @@
 ##
 ##-*****************************************************************************
 
-IF(DEFINED USE_PYALEMBIC AND NOT USE_PYALEMBIC)
+IF(DEFINED USE_PYTHON AND NOT USE_PYTHON)
     MESSAGE(STATUS "Skipping finding PyIlmBase and PyImath")
 ELSE()
     MESSAGE(STATUS "About to start finding PyIlmBase and PyImath")

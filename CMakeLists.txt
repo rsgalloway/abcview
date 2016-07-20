@@ -39,8 +39,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 # Declare the project version
 SET(PROJECT_VERSION_MAJOR "1")
-SET(PROJECT_VERSION_MINOR "0")
-SET(PROJECT_VERSION_PATCH "9")
+SET(PROJECT_VERSION_MINOR "1")
+SET(PROJECT_VERSION_PATCH "0")
 SET(PROJECT_VERSION
      ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 SET(VERSION ${PROJECT_VERSION})
@@ -49,11 +49,11 @@ SET(VERSION ${PROJECT_VERSION})
 # OPTIONS (set with -D<option>=<value>)
 # ------------------------------------------------------------------------------
 
-OPTION(USE_STATIC_BOOST "Build with static Boost libs" ON)
-OPTION(USE_PYTHON "Include PyAbcOpenGL and PyQt app" ON)
+OPTION(USE_PYTHON "Include PyAbcOpenGL and PyQt app" OFF)
 OPTION(USE_SHARED_LIBS "Build shared libraries" ON)
 OPTION(ABCVIEW_GLEW_LINK_STATIC "GLEW is a static library" OFF)
 OPTION(ILMBASE_LINK_STATIC "IlmBase is a static library" OFF)
+OPTION(USE_STATIC_BOOST "Build with static Boost libs" OFF)
 
 # Set static/dynamic build options
 SET(LIB_TYPE STATIC)
@@ -185,12 +185,6 @@ ENDIF()
 
 FIND_PACKAGE(Threads REQUIRED)
 
-# Boost
-IF (USE_PYTHON)
-    INCLUDE("./cmake/AbcViewBoost.cmake")
-    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-ENDIF()
-
 # Alembic
 FIND_PACKAGE(Alembic REQUIRED)
 MESSAGE(STATUS "ALEMBIC_LIB: ${ALEMBIC_LIB}")
@@ -200,6 +194,14 @@ INCLUDE_DIRECTORIES(${ALEMBIC_INCLUDE_PATH})
 # IlmBase
 INCLUDE("./cmake/AbcViewIlmBase.cmake")
 INCLUDE_DIRECTORIES(${ILMBASE_INCLUDE_DIRECTORY})
+
+# Python
+IF (USE_PYTHON)
+    INCLUDE("./cmake/AbcViewBoost.cmake")
+    INCLUDE("./cmake/AbcViewPython.cmake")
+    INCLUDE("./cmake/AbcViewPyIlmBase.cmake")
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+ENDIF()
 
 # OpenGL
 FIND_PACKAGE(OpenGL REQUIRED)

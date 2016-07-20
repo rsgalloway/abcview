@@ -33,32 +33,11 @@
 ##
 ##-*****************************************************************************
 
-IF (DEFINED LIBPYTHON_VERSION)
-    SET(PYTHON_EXECUTABLE_NAMES python${LIBPYTHON_VERSION})
-ELSE ()
-    IF (APPLE)
-        SET(PYTHON_EXECUTABLE_NAMES python2.7 python27 python2 python)
-    ELSE ()
-        SET(PYTHON_EXECUTABLE_NAMES python2.6 python26 python2 python)
-    ENDIF ()
-ENDIF ()
-
-# First the version of python
-# FIND_PACKAGE( PythonInterp 2.5.1 EXACT REQUIRED )
-# The default FindPythonInterp.cmake module is flaky, doesn't listen
-# to required or version
-FIND_PROGRAM(PYTHON_EXECUTABLE
-  NAMES ${PYTHON_EXECUTABLE_NAMES}
-  PATHS
-  [HKEY_LOCAL_MACHINE\\SOFTWARE\\Python\\PythonCore\\2.5\\InstallPath]
-  ${PYTHON_ROOT}
-  /usr/bin
-  /usr/lib/debug/usr/bin 
-  )
-IF( ${PYTHON_EXECUTABLE} STREQUAL PYTHON_EXECUTABLE-NOTFOUND )
-  MESSAGE( FATAL_ERROR "Could not find python 2.6" )
-ELSE()
-  MESSAGE( STATUS "Found Python 2.6: ${PYTHON_EXECUTABLE}" )
+FIND_PACKAGE ( PythonLibs REQUIRED )
+FIND_PACKAGE ( PythonInterp REQUIRED )
+IF(PYTHONLIBS_FOUND)
+    SET(PYTHON_INCLUDE_DIR ${PYTHON_INCLUDE_DIRS})
+    SET(PYTHON_LIBRARY ${PYTHON_LIBRARIES})
 ENDIF()
 
 SET( CopyScriptFile ${PROJECT_SOURCE_DIR}/cmake/CopyScriptFile.py )
