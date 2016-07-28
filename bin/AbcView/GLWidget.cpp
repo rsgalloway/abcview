@@ -76,6 +76,31 @@ void set_diffuse_light()
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 }
 
+void draw_grid()
+{
+    glDisable(GL_LIGHTING);
+    glColor3f(0.5, 0.5, 0.5);
+
+    for (int x=-10; x<11; x++)
+    {
+        if (x == 0)
+            continue;
+        glBegin(GL_LINES);
+        glVertex3f(x, 0, -10);
+        glVertex3f(x, 0, 10);
+        glVertex3f(-10, 0, x);
+        glVertex3f(10, 0, x);
+        glEnd();  
+    }
+
+    glBegin(GL_LINES);
+    glVertex3f(0, 0, -10);
+    glVertex3f(0, 0, 10);
+    glVertex3f(-10, 0, 0);
+    glVertex3f(10, 0, 0);
+    glEnd();
+}
+
 GLWidget::GLWidget(QWidget *parent) :
     QGLWidget(parent)
 {
@@ -136,6 +161,8 @@ void GLWidget::paintGL()
     glDrawBuffer(GL_BACK);
     glLoadIdentity();
     m_camera.apply();
+
+    draw_grid();
 
     for (int i=0; i<m_state->getScenes()->size(); i++)
     {
