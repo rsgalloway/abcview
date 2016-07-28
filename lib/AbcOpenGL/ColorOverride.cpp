@@ -34,61 +34,50 @@
 //
 //-*****************************************************************************
 
-#ifndef _AbcOpenGL_DrawContext_h_
-#define _AbcOpenGL_DrawContext_h_
-
-#include "Foundation.h"
 #include "ColorOverride.h"
 
 namespace AbcOpenGL {
 namespace ABCOPENGL_VERSION_NS {
 
 //-*****************************************************************************
-class DrawContext
-{
-public:
-    DrawContext()
-    {
-        m_worldToCamera.makeIdentity();
-        m_pointSize = 3.0f;
-        m_visibleOnly = false;
-        m_boundsOnly = false;
-    }
 
-    // Default copy & assign.
+//! Virtual destructor
+//! ...
+ColorOverride::~ColorOverride() {
+}
 
-    // Get/Set world-to-camera
-    const M44d &getWorldToCamera() const { return m_worldToCamera; }
-    void setWorldToCamera( const M44d & iXf ) { m_worldToCamera = iXf; }
-
-    // Get/Set point size
-    float getPointSize() const { return m_pointSize; }
-    void setPointSize( float iPs ) { m_pointSize = iPs; }
-
-    // Get/Set visibility toggle - don't draw objs w/ visible=0
-    bool visibleOnly() const { return m_visibleOnly; }
-    void setVisibleOnly( bool visibleOnly ) { m_visibleOnly = visibleOnly; }
-
-    // Get/Set draw bounds toggle - draw object bounds only
-    bool boundsOnly() const { return m_boundsOnly; }
-    void setBoundsOnly( bool boundsOnly ) { m_boundsOnly = boundsOnly; }
-    
-    // Get/Set colour override map
-    const ColorOverride &getColorOverrides() const{ return m_ctx_color_overrides; }
-    void setColorOverrides(const ColorOverride & color_overrides){ m_ctx_color_overrides = color_overrides; }
-
-protected:
-    M44d m_worldToCamera;
-    float m_pointSize;
-    bool m_visibleOnly;
-    bool m_boundsOnly;
-    ColorOverride m_ctx_color_overrides;
+//! Add to map
+//! ...
+void ColorOverride::pushColorOverride( std::string const override_string, C3f const color_override ){
+    m_color_overrides[override_string]=color_override;
 };
 
+//! Remove from map
+//! ...
+void ColorOverride::popColorOverride( std::string const override_string){
+    m_color_overrides.erase(override_string);
+}
+
+//! Clear map
+//! ...
+void ColorOverride::clearColorOverride(){
+    m_color_overrides.clear();
+}
+
+C3f ColorOverride::color_override( const std::string &comparison_string, const C3f &no_match_color ) const
+{
+    C3f result_color=no_match_color;
+    std::map<std::string, C3f>::iterator it;
+    it = m_color_overrides.find(comparison_string);
+    if (it != m_color_overrides.end())
+    {
+         // We have a match therefore set a color
+         result_color = it -> second;
+    }    
+    return result_color;
+} 
+
+std::map<std::string, C3f> ColorOverride::m_color_overrides;
+
 } // End namespace ABCOPENGL_VERSION_NS
-
-using namespace ABCOPENGL_VERSION_NS;
-
 } // End namespace AbcOpenGL
-
-#endif

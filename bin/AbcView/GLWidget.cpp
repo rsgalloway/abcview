@@ -1,3 +1,39 @@
+//-*****************************************************************************
+//
+// Copyright (c) 2009-2016,
+//  Sony Pictures Imageworks, Inc. and
+//  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
+//
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+// *       Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+// *       Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+// *       Neither the name of Sony Pictures Imageworks, nor
+// Industrial Light & Magic nor the names of their contributors may be used
+// to endorse or promote products derived from this software without specific
+// prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//-*****************************************************************************
+
 #include "GLWidget.h"
 
 namespace AbcView {
@@ -5,18 +41,18 @@ namespace ABCVIEW_VERSION_NS {
 
 void set_diffuse_light()
 {
-    GLfloat ambient[] = {0.1, 0.1, 0.1, 1.0};
-    GLfloat diffuse[] = {0.5, 1.0, 1.0, 1.0};
+    GLfloat ambient[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat diffuse[] = {0.9, 0.9, 0.9, 1.0};
     GLfloat position[] = {90.0, 90.0, 150.0, 0.0};
 
-    GLfloat front_mat_shininess[] = {60.0};
-    GLfloat front_mat_specular[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat front_mat_diffuse[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat back_mat_shininess[] = {60.0};
-    GLfloat back_mat_specular[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat back_mat_diffuse[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat front_mat_shininess[] = {10.0};
+    GLfloat front_mat_specular[] = {0.3, 0.3, 0.3, 1.0};
+    GLfloat front_mat_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat back_mat_shininess[] = {10.0};
+    GLfloat back_mat_specular[] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat back_mat_diffuse[] = {0.5, 0.5, 0.5, 1.0};
 
-    GLfloat lmodel_ambient[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat lmodel_ambient[] = {0.2, 0.2, 0.2, 1.0};
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -25,7 +61,7 @@ void set_diffuse_light()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    //glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
 
     glMaterialfv(GL_FRONT, GL_SHININESS, front_mat_shininess);
@@ -62,6 +98,7 @@ void GLWidget::setState( AbcView::GLState* state )
     m_state = state;
     connect(m_state, SIGNAL(sceneAdded(int)), this, SLOT(updateGL()));
     connect(m_state, SIGNAL(steppedForward()), this, SLOT(updateGL()));
+    connect(m_state, SIGNAL(redraw()), this, SLOT(updateGL()));
 }
 
 void GLWidget::frame()
@@ -84,7 +121,7 @@ void GLWidget::initializeGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDisable(GL_CULL_FACE);
     glShadeModel(GL_SMOOTH);
-    glClearColor(0.16, 0.17, 0.18, 0.0);
+    glClearColor(0.26, 0.27, 0.28, 0.0);
     set_diffuse_light();
 
     // camera orbit defaults
@@ -162,11 +199,21 @@ void GLWidget::keyPressEvent(QKeyEvent *event)
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-    m_last_p2d = Imath::V2d(event->pos().x(), event->pos().y());
-    std::pair<bool, Imath::V3d> map;
-    map = mapToSphere(m_last_p2d);
-    m_last_pok = map.first;
-    m_last_p3d = map.second;
+    if ( event->modifiers() == Qt::AltModifier )
+    {
+        m_last_p2d = Imath::V2d(event->pos().x(), event->pos().y());
+        std::pair<bool, Imath::V3d> map;
+        map = mapToSphere(m_last_p2d);
+        m_last_pok = map.first;
+        m_last_p3d = map.second;
+    }
+    else
+    {
+        int x = event->pos().x();
+        int y = event->pos().y();
+        std::string hit = m_state->selection(x, y, m_camera);
+        m_state->update();
+    }
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
@@ -192,12 +239,17 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     makeCurrent();
 
     if ( (event->buttons() == Qt::LeftButton & event->modifiers() == Qt::ControlModifier)
-        || (event->buttons() == Qt::RightButton & event->modifiers() == Qt::AltModifier) ) {
+        || (event->buttons() == Qt::RightButton & event->modifiers() == Qt::AltModifier) )
+    {
         m_camera.dolly(Imath::V2d(dx, dy));
-    } else if ( (event->buttons() & Qt::MidButton
-        || (event->buttons() == Qt::LeftButton & event->modifiers() == Qt::ShiftModifier)) ) {
+    }
+    else if ( (event->buttons() & Qt::MidButton
+        || (event->buttons() == Qt::LeftButton & event->modifiers() == Qt::ShiftModifier)) )
+    {
         m_camera.track(Imath::V2d(dx, dy));
-    } else if ( event->buttons() & Qt::LeftButton ) {
+    }
+    else if ( event->buttons() & Qt::LeftButton )
+    {
         m_rotating = true;
         m_camera.rotate(Imath::V2d(dx, dy));
     }

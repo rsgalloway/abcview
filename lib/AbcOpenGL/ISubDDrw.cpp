@@ -76,6 +76,27 @@ ISubDDrw::ISubDDrw( ISubD &iPmesh )
             m_maxTime = std::max( m_maxTime, maxTime );
         }
     }
+
+    m_fullName=m_subD.getFullName();
+
+    // set the mesh color
+    Abc::ICompoundProperty geomProps = m_subD.getSchema().getArbGeomParams();
+    if ( geomProps != NULL )
+    {
+        const Abc::PropertyHeader* header = geomProps.getPropertyHeader( "geomColors" );
+        if ( header != NULL )
+        {
+            IC3fGeomParam geomColors( geomProps, "geomColors" );
+            Abc::ISampleSelector iss( m_currentTime );
+            IC3fGeomParam::Sample samp = geomColors.getExpandedValue( iss );
+            m_color = (*(samp.getVals()))[0];
+            //glColor3f(m_color[0], m_color[1], m_color[2]);
+        }
+    }
+    else
+    {
+        m_color = C3f(0.5, 0.5, 0.5); //glColor3f(0.5, 0.5, 0.5);
+    }
 }
 
 //-*****************************************************************************
@@ -150,11 +171,15 @@ void ISubDDrw::draw( const DrawContext &iCtx )
         return;
     }
 
+    m_drwHelper.setFullPath(m_fullName);
+    
+    glColor3f(m_color[0], m_color[1], m_color[2]);
+
     if ( iCtx.boundsOnly() )
         m_drwHelper.drawBounds( iCtx );
     else
         m_drwHelper.draw( iCtx );
-
+    
     IObjectDrw::draw( iCtx );
 }
 

@@ -80,6 +80,7 @@ IPointsDrw::IPointsDrw( IPoints &iPmesh )
             m_maxTime = std::max( m_maxTime, maxTime );
         }
     }
+    m_fullName=m_points.getFullName();    
 }
 
 //-*****************************************************************************
@@ -145,7 +146,11 @@ void IPointsDrw::draw( const DrawContext &iCtx )
         IObjectDrw::draw( iCtx );
         return;
     }
-
+    float previous_color[4];
+    glGetFloatv(GL_CURRENT_COLOR,previous_color);
+    C3f cur_color = iCtx.getColorOverrides().color_override(m_fullName,
+            C3f(previous_color[0],previous_color[1],previous_color[2]));
+    glColor3f(cur_color[0],cur_color[1],cur_color[2]);
     size_t numPoints = m_positions->size();
 
     const V3f *points = m_positions->get();
@@ -231,7 +236,7 @@ void IPointsDrw::draw( const DrawContext &iCtx )
     glEnd();
 
 #endif
-
+    glColor3d(previous_color[0], previous_color[1], previous_color[2]);
     glEnable( GL_LIGHTING );
 
     IObjectDrw::draw( iCtx );

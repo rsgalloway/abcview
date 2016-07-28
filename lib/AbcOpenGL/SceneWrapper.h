@@ -40,7 +40,8 @@
 #include <sstream>
 #include "Export.h"
 #include "Foundation.h"
-#include <AbcOpenGL/GLCamera.h>
+#include "GLCamera.h"
+#include "ColorOverride.h"
 
 namespace AbcOpenGL {
 namespace ABCOPENGL_VERSION_NS {
@@ -75,6 +76,10 @@ public:
 
     double_vec min_bounds();
     double_vec max_bounds();
+    void addOverrideColorString( const std::string override_string, const C3f override_color);
+    void removeOverrideColorString( const std::string override_string);
+    void clearOverrideColorString(); 
+    ColorOverride getColorOverrides();
 
 protected:
     class _scn_impl;

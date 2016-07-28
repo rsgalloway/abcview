@@ -35,7 +35,6 @@
 //-*****************************************************************************
 
 #include "MeshDrwHelper.h"
-
 namespace AbcOpenGL {
 namespace ABCOPENGL_VERSION_NS {
 
@@ -283,12 +282,20 @@ void MeshDrwHelper::updateNormals( V3fArraySamplePtr iN )
 //-*****************************************************************************
 void MeshDrwHelper::drawBounds( const DrawContext & iCtx ) const
 {
+    float previous_color[4];
+    glGetFloatv(GL_CURRENT_COLOR,previous_color);
+    C3f cur_color = iCtx.getColorOverrides().color_override(m_full_path,
+            C3f(previous_color[0],previous_color[1],previous_color[2]));
+    glColor3f(cur_color[0],cur_color[1],cur_color[2]);
+
     drawBoundingBox( m_bounds );
+    glColor3f(previous_color[0],previous_color[1],previous_color[2]);
 }
 
 //-*****************************************************************************
 void drawBoundingBox( const Box3d bounds, const int mode )
 {
+
     float min_x = bounds.min[0];
     float min_y = bounds.min[1];
     float min_z = bounds.min[2];
@@ -351,12 +358,19 @@ void drawBoundingBox( const Box3d bounds, const int mode )
 //-*****************************************************************************
 void MeshDrwHelper::draw( const DrawContext & iCtx ) const
 {
-    // Bail if invalid.
+    float previous_color[4];
+    glGetFloatv(GL_CURRENT_COLOR, previous_color);
+
+    C3f cur_color = iCtx.getColorOverrides().color_override(m_full_path,
+           C3f(previous_color[0], previous_color[1], previous_color[2]));
+
+    glColor3f(cur_color[0], cur_color[1], cur_color[2]);
+
     if ( !m_valid || m_triangles.size() < 1 || !m_meshP )
     {
         return;
     }
-
+    
     const V3f *points = m_meshP->get();
     const V3f *normals = NULL;
     if ( m_meshN  && ( m_meshN->size() == m_meshP->size() ) )
@@ -440,6 +454,7 @@ void MeshDrwHelper::draw( const DrawContext & iCtx ) const
     glEnd();
 
 #endif
+    glColor3f(previous_color[0], previous_color[1], previous_color[2]);
 }
 
 //-*****************************************************************************

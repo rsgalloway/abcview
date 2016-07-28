@@ -77,6 +77,9 @@ protected:
     DrawablePtrVec m_children;
 
     Box3d m_bounds;
+    C3f m_color;
+    ColorOverride m_colorOverride;
+    std::string m_fullName;
 };
 
 } // End namespace ABCOPENGL_VERSION_NS

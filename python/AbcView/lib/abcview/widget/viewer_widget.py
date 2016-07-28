@@ -92,18 +92,18 @@ def set_diffuse_light():
     """
     Sets up the GL calls for the light that illuminates objects.
     """
-    ambient = (1.0, 1.0, 1.0, 1.0)
-    diffuse = (0.5, 1.0, 1.0, 1.0)
+    ambient = (0.2, 0.2, 0.2, 1.0)
+    diffuse = (0.9, 0.9, 0.9, 1.0)
     position = (90.0, 90.0, 150.0, 0.0)
 
-    front_mat_shininess = (60.0)
-    front_mat_specular = (0.0, 0.0, 0.0, 1.0)
-    front_mat_diffuse = (0.0, 0.0, 0.0, 1.0)
-    back_mat_shininess = (60.0)
-    back_mat_specular = (0.0, 0.0, 0.0, 1.0)
-    back_mat_diffuse = (0.0, 0.0, 0.0, 1.0)
+    front_mat_shininess = (10.0)
+    front_mat_specular = (0.3, 0.3, 0.3, 1.0)
+    front_mat_diffuse = (1.0, 1.0, 1.0, 1.0)
+    back_mat_shininess = (10.0)
+    back_mat_specular = (0.2, 0.2, 0.2, 1.0)
+    back_mat_diffuse = (0.5, 0.5, 0.5, 1.0)
 
-    lmodel_ambient = (0.0, 0.0, 0.0, 1.0)
+    lmodel_ambient = (0.2, 0.2, 0.2, 1.0)
 
     glEnable(GL_LIGHTING)
     glEnable(GL_LIGHT0)
@@ -111,7 +111,7 @@ def set_diffuse_light():
 
     glEnable(GL_DEPTH_TEST)
     
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient)
+    #glLightfv(GL_LIGHT0, GL_AMBIENT, ambient)
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse)
 
     glMaterialfv(GL_FRONT, GL_SHININESS, front_mat_shininess)

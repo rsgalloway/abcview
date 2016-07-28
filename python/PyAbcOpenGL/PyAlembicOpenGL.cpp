@@ -1,6 +1,6 @@
 //-*****************************************************************************
 //
-// Copyright (c) 2013-2014,
+// Copyright (c) 2013-2016,
 //  Sony Pictures Imageworks Inc. and
 //  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 //
@@ -34,7 +34,7 @@
 //
 //-*****************************************************************************
 
-#include <Foundation.h>
+#include "Foundation.h"
 #include <AbcOpenGL/All.h>
 
 using namespace boost::python;
@@ -166,6 +166,16 @@ void register_opengl()
               &AbcOpenGL::SceneWrapper::bounds )
         .def( "frame",
               &AbcOpenGL::SceneWrapper::frame,
-              ( arg( "bounds" ) ) )
+              ( arg( "bounds" ) ) )              
+        .def( "addOverrideColorString",
+              &AbcOpenGL::SceneWrapper::addOverrideColorString,
+              ( arg( "ovcrride_string" ), arg( "override_color" ) ) )
+        .def( "removeOverrideColorString",
+              &AbcOpenGL::SceneWrapper::removeOverrideColorString,
+              ( arg( "override_string" ) ) ) 
+        .def( "clearOverrideColorString",
+              &AbcOpenGL::SceneWrapper::clearOverrideColorString )       
+        .def( "getColorOverrides",
+              &AbcOpenGL::SceneWrapper::getColorOverrides )
         ;
 }

@@ -1,6 +1,6 @@
 //-*****************************************************************************
 //
-// Copyright (c) 2009-2013,
+// Copyright (c) 2009-2016,
 //  Sony Pictures Imageworks, Inc. and
 //  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 //
@@ -34,9 +34,10 @@
 //
 //-*****************************************************************************
 
-#include <AbcOpenGL/SceneWrapper.h>
-#include <AbcOpenGL/Scene.h>
-#include <AbcOpenGL/GLCamera.h>
+#include "Scene.h"
+#include "SceneWrapper.h"
+#include "GLCamera.h"
+#include "ColorOverride.h"
 #include <ctime>
 
 namespace AbcOpenGL {
@@ -116,6 +117,22 @@ public:
         m_state.cam.frame(bounds);
     }
 
+    void addOverrideColorString( const std::string override_string, const C3f override_color) {
+        m_scene.addOverrideColorString(override_string, override_color);
+    }
+
+    void removeOverrideColorString( const std::string override_string){
+        m_scene.removeOverrideColorString(override_string);
+    }
+
+    void clearOverrideColorString() {
+        m_scene.clearOverrideColorString();
+    }
+
+    ColorOverride getColorOverrides() {
+        return m_scene.getColorOverrides();
+    }
+
     Scene m_scene;
     SceneState m_state;
     chrono_t m_framesPerSecond;
@@ -192,8 +209,28 @@ void SceneWrapper::frame(const Box3d &bounds)
     m_state->frame(bounds);
 }
 
-double_vec
-SceneWrapper::min_bounds() {
+void SceneWrapper::addOverrideColorString( const std::string override_string, const C3f override_color)
+{
+    m_state->addOverrideColorString(override_string, override_color);
+}
+
+void SceneWrapper::removeOverrideColorString( const std::string override_string)
+{
+    m_state->removeOverrideColorString(override_string);
+}
+
+void SceneWrapper::clearOverrideColorString()
+{
+    m_state->clearOverrideColorString();
+} 
+
+ColorOverride SceneWrapper::getColorOverrides()
+{
+    return m_state->getColorOverrides();
+}
+    
+double_vec SceneWrapper::min_bounds()
+{
     Imath::Vec3<double> v = m_state->bounds().min;
     double_vec d;
     d.xyz[0] = v.x;
@@ -202,8 +239,8 @@ SceneWrapper::min_bounds() {
     return d;
 }
 
-double_vec
-SceneWrapper::max_bounds() {
+double_vec SceneWrapper::max_bounds()
+{
     Imath::Vec3<double> v = m_state->bounds().max;
     double_vec d;
     d.xyz[0] = v.x;

@@ -172,7 +172,9 @@ int Scene::processHits( GLint hits, GLuint buffer[] )
 
     ptr = (GLuint *) buffer;
     minZ = 0xffffffff;
-    for ( i=0; i<hits; i++ ) {
+
+    for ( i=0; i<hits; i++ )
+    {
         names = *ptr;
         ptr++;
         if ( *ptr < minZ ) {
@@ -183,10 +185,9 @@ int Scene::processHits( GLint hits, GLuint buffer[] )
         ptr += names+2;
     }
 
-    std::cout << "names " << names << std::endl;
-
     ptr = ptrNames;
-    for (j = 0; j < index; j++,ptr++) {
+    for (j = 0; j < index; j++,ptr++)
+    {
         std::cout << *ptr ;
     }
 
@@ -224,13 +225,20 @@ std::string Scene::selection( int x, int y, GLCamera &camera, SceneState &s_stat
 
     // finally release the rendering context again
     int hits = glRenderMode(GL_RENDER);
-
-    if ( hits == 0 ) {
-        return "";
-    } else {
-        return OBJECT_MAP[ buffer[3]-1 ];
+    std::string selection = "";
+    if ( hits == 0 )
+    {
+        Scene::clearOverrideColorString();
+    }
+    else
+    {
+        selection = OBJECT_MAP[ buffer[3]-1 ];  
+        Scene::clearOverrideColorString();
+        Scene::addOverrideColorString(selection, C3f(0.5f, 0.1f, 0.0f));  
+        draw(s_state, true);
     }
 
+    return selection;
 }
 
 //-*****************************************************************************
@@ -260,9 +268,35 @@ void Scene::draw( SceneState &s_state, bool visibleOnly, bool boundsOnly )
     dctx.setPointSize( s_state.pointSize );
     dctx.setVisibleOnly( visibleOnly );
     dctx.setBoundsOnly( boundsOnly );
+    
+    //ColorOverride currentOverrides=m_color_overrides;
+    
+    dctx.setColorOverrides( m_color_overrides );
 
     m_drawable->draw( dctx );
+}
 
+//-*****************************************************************************
+void Scene::addOverrideColorString( const std::string override_string, const C3f override_color )
+{
+    m_color_overrides.pushColorOverride(override_string, override_color);
+}
+
+//-*****************************************************************************
+void Scene::removeOverrideColorString( const std::string override_string )
+{
+     m_color_overrides.popColorOverride(override_string);
+} 
+
+//-*****************************************************************************
+void Scene::clearOverrideColorString()
+{
+     m_color_overrides.clearColorOverride();
+} 
+
+ColorOverride Scene::getColorOverrides()
+{
+    return m_color_overrides;
 }
 
 } // End namespace ABCOPENGL_VERSION_NS

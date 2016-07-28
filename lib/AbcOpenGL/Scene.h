@@ -1,6 +1,6 @@
 //-*****************************************************************************
 //
-// Copyright (c) 2009-2013,
+// Copyright (c) 2009-2016,
 //  Sony Pictures Imageworks, Inc. and
 //  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 //
@@ -41,6 +41,7 @@
 #include "Foundation.h"
 #include "GLCamera.h"
 #include "Drawable.h"
+#include "ColorOverride.h"
 #include <ctime>
 
 namespace AbcOpenGL {
@@ -118,7 +119,19 @@ public:
     void drawBounds( SceneState &s_state, const int mode = GL_LINES );
     void draw( SceneState &s_state, bool visibleOnly = false, 
                                     bool boundsOnly = false);
-
+    //! Adds override color string to map of override strings
+    //! ...
+    void addOverrideColorString( const std::string override_string, const C3f override_color);
+    //! Removes override color string to map of override strings
+    //! ...
+    void removeOverrideColorString( const std::string override_string);
+    //! Clear override color string to map of override strings
+    //! ...    
+    void clearOverrideColorString(); 
+    //! Return map of keys of string and C3f as values
+    //! ...       
+    ColorOverride getColorOverrides();
+    
 protected:
     std::string m_fileName;
     IArchive m_archive;
@@ -129,6 +142,7 @@ protected:
     Box3d m_bounds;
 
     DrawablePtr m_drawable;
+    ColorOverride m_color_overrides;
 };
 
 } // End namespace ABCOPENGL_VERSION_NS

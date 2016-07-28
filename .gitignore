@@ -1,8 +1,11 @@
 .DS_Store
 *.pyc
 *.swp
+*.orig
+*.rej
 *~
 *.moc
+*_bup
 venv
 build
 dist

@@ -44,6 +44,7 @@ IF (Boost_PYTHON_LIBRARY AND PYTHON_LIBRARY)
 
   LINK_LIBRARIES(
       ${CORE_LIBS}
+      AlembicAbcOpenGL
       ${PLIBS}
       ${PYILMBASE_PYIMATH_LIB}
   )

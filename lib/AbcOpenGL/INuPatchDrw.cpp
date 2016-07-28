@@ -73,6 +73,7 @@ INuPatchDrw::INuPatchDrw( INuPatch &iNuPatch )
             m_maxTime = std::max( m_maxTime, maxTime );
         }
     }
+    m_fullName=m_nuPatch.getFullName();    
 }
 
 //-*****************************************************************************
@@ -138,8 +139,11 @@ void INuPatchDrw::draw( const DrawContext &iCtx )
     size_t nknotu = m_uKnot -> size();
     size_t nknotv = m_vKnot -> size();
 
-    glColor3f(1.0, 1.0, 1.0);
-
+    float previous_color[4];
+    glGetFloatv(GL_CURRENT_COLOR,previous_color);
+    C3f cur_color = iCtx.getColorOverrides().color_override(m_fullName,
+            C3f(previous_color[0],previous_color[1],previous_color[2]));
+    glColor3f(cur_color[0],cur_color[1],cur_color[2]);
     gluBeginSurface(nurb);
 
         gluNurbsSurface( nurb,
@@ -152,7 +156,7 @@ void INuPatchDrw::draw( const DrawContext &iCtx )
                         );
 
     gluEndSurface(nurb);
-
+    glColor3f(previous_color[0], previous_color[1], previous_color[2]);
 
     IObjectDrw::draw( iCtx );
 }

@@ -1,6 +1,6 @@
 //-*****************************************************************************
 //
-// Copyright (c) 2009-2013,
+// Copyright (c) 2009-2016,
 //  Sony Pictures Imageworks, Inc. and
 //  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 //
@@ -37,19 +37,20 @@
 #ifndef _AbcOpenGL_All_h_
 #define _AbcOpenGL_All_h_
 
-#include <AbcOpenGL/Drawable.h>
-#include <AbcOpenGL/DrawContext.h>
-#include <AbcOpenGL/Foundation.h>
-#include <AbcOpenGL/GLCamera.h>
-#include <AbcOpenGL/ICurvesDrw.h>
-#include <AbcOpenGL/INuPatchDrw.h>
-#include <AbcOpenGL/IObjectDrw.h>
-#include <AbcOpenGL/IPointsDrw.h>
-#include <AbcOpenGL/IPolyMeshDrw.h>
-#include <AbcOpenGL/ISubDDrw.h>
-#include <AbcOpenGL/IXformDrw.h>
-#include <AbcOpenGL/MeshDrwHelper.h>
-#include <AbcOpenGL/Scene.h>
-#include <AbcOpenGL/SceneWrapper.h>
+#include "ColorOverride.h"
+#include "Drawable.h"
+#include "DrawContext.h"
+#include "Foundation.h"
+#include "GLCamera.h"
+#include "ICurvesDrw.h"
+#include "INuPatchDrw.h"
+#include "IObjectDrw.h"
+#include "IPointsDrw.h"
+#include "IPolyMeshDrw.h"
+#include "ISubDDrw.h"
+#include "IXformDrw.h"
+#include "MeshDrwHelper.h"
+#include "Scene.h"
+#include "SceneWrapper.h"
 
 #endif

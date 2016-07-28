@@ -1,6 +1,6 @@
 //-*****************************************************************************
 //
-// Copyright (c) 2009-2013,
+// Copyright (c) 2009-2016,
 //  Sony Pictures Imageworks, Inc. and
 //  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 //
@@ -59,16 +59,15 @@ int pushName( IObject &iObj )
     {
         OBJECT_MAP.push_back( iObj.getFullName() );
         glPushName( OBJECT_MAP.size() );
-        //std::cout << OBJECT_MAP.size()
-        //          << "\t"
-        //          << iObj.getFullName()
-        //          << std::endl;
         return OBJECT_MAP.size();
-    } else {
+    }
+    else
+    {
         return -1;
     }
 }
 
+//-*****************************************************************************
 void popName( IObject &iObj )
 {
     glPopName();
@@ -255,5 +254,6 @@ void IObjectDrw::draw( const DrawContext &iCtx )
     
 }
 
+    
 } // End namespace ABCOPENGL_VERSION_NS
 } // End namespace AbcOpenGL

@@ -1,6 +1,6 @@
 //-*****************************************************************************
 //
-// Copyright (c) 2009-2013,
+// Copyright (c) 2009-2016,
 //  Sony Pictures Imageworks, Inc. and
 //  Industrial Light & Magic, a division of Lucasfilm Entertainment Company Ltd.
 //
@@ -34,55 +34,34 @@
 //
 //-*****************************************************************************
 
-#ifndef _AbcOpenGL_DrawContext_h_
-#define _AbcOpenGL_DrawContext_h_
+#ifndef _AbcOpenGL_ColorOverride_h_
+#define _AbcOpenGL_ColorOverride_h_
 
+#include "Export.h"
 #include "Foundation.h"
-#include "ColorOverride.h"
 
 namespace AbcOpenGL {
 namespace ABCOPENGL_VERSION_NS {
 
 //-*****************************************************************************
-class DrawContext
+//! Set an override colour for a particular path within an alembic
+class ABC_OPENGL_EXPORT ColorOverride
 {
 public:
-    DrawContext()
-    {
-        m_worldToCamera.makeIdentity();
-        m_pointSize = 3.0f;
-        m_visibleOnly = false;
-        m_boundsOnly = false;
-    }
+    ColorOverride() {}
 
-    // Default copy & assign.
-
-    // Get/Set world-to-camera
-    const M44d &getWorldToCamera() const { return m_worldToCamera; }
-    void setWorldToCamera( const M44d & iXf ) { m_worldToCamera = iXf; }
-
-    // Get/Set point size
-    float getPointSize() const { return m_pointSize; }
-    void setPointSize( float iPs ) { m_pointSize = iPs; }
-
-    // Get/Set visibility toggle - don't draw objs w/ visible=0
-    bool visibleOnly() const { return m_visibleOnly; }
-    void setVisibleOnly( bool visibleOnly ) { m_visibleOnly = visibleOnly; }
-
-    // Get/Set draw bounds toggle - draw object bounds only
-    bool boundsOnly() const { return m_boundsOnly; }
-    void setBoundsOnly( bool boundsOnly ) { m_boundsOnly = boundsOnly; }
-    
-    // Get/Set colour override map
-    const ColorOverride &getColorOverrides() const{ return m_ctx_color_overrides; }
-    void setColorOverrides(const ColorOverride & color_overrides){ m_ctx_color_overrides = color_overrides; }
+    //! Virtual destructor for abstract base class
+    //! ...
+    virtual ~ColorOverride();
+    virtual void pushColorOverride( std::string const override_string, C3f const color_override );
+    virtual void popColorOverride( std::string const override_string);
+    virtual void clearColorOverride();
+    const std::map<std::string, C3f> &overrides() const{ return m_color_overrides ;}
+    C3f color_override ( const std::string &comparison_string, const C3f &no_match_color ) const;    
 
 protected:
-    M44d m_worldToCamera;
-    float m_pointSize;
-    bool m_visibleOnly;
-    bool m_boundsOnly;
-    ColorOverride m_ctx_color_overrides;
+    static std::map<std::string, C3f> m_color_overrides;
+
 };
 
 } // End namespace ABCOPENGL_VERSION_NS

@@ -37,6 +37,7 @@
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/lib ${PROJECT_BINARY_DIR}/lib)
 
 SET(H_FILES
+    ColorOverride.h
     DrawContext.h
     Drawable.h
     Export.h
@@ -55,6 +56,7 @@ SET(H_FILES
 )
 
 SET(CXX_FILES
+    ColorOverride.cpp
     GLCamera.cpp
     ICurvesDrw.cpp
     INuPatchDrw.cpp

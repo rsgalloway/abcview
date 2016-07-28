@@ -67,6 +67,7 @@ ICurvesDrw::ICurvesDrw( ICurves &iCurves )
             m_maxTime = std::max( m_maxTime, maxTime );
         }
     }
+    m_fullName=m_curves.getFullName();
 }
 
 //-*****************************************************************************
@@ -112,7 +113,12 @@ void ICurvesDrw::draw( const DrawContext &iCtx )
 
     const V3f *points = m_positions->get();
     const Alembic::Util::int32_t *nVertices = m_nVertices->get();
-
+    
+    float previous_color[4];
+    glGetFloatv(GL_CURRENT_COLOR,previous_color);
+    C3f cur_color = iCtx.getColorOverrides().color_override(m_fullName,
+            C3f(previous_color[0],previous_color[1],previous_color[2]));
+    glColor3f(cur_color[0],cur_color[1],cur_color[2]);
     glDisable( GL_LIGHTING );
 
     glColor3f( 1.0, 1.0, 1.0 );
@@ -145,7 +151,7 @@ void ICurvesDrw::draw( const DrawContext &iCtx )
         }
         glEnd();
     }
-
+    glColor3d(previous_color[0], previous_color[1], previous_color[2]);
     glEnable( GL_LIGHTING );
 
     IObjectDrw::draw( iCtx );

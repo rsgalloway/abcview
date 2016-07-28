@@ -39,6 +39,7 @@
 
 #include "Foundation.h"
 #include "DrawContext.h"
+#include "ColorOverride.h"
 
 namespace AbcOpenGL {
 namespace ABCOPENGL_VERSION_NS {
@@ -84,6 +85,7 @@ public:
     //! Draw the object (and its children) at the current frame.
     //! ...
     virtual void draw( const DrawContext & iCtx ) = 0;
+    
 };
 
 //-*****************************************************************************

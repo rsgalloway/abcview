@@ -40,6 +40,7 @@
 #include "Export.h"
 #include "Foundation.h"
 #include "DrawContext.h"
+#include "ColorOverride.h"
 
 namespace AbcOpenGL {
 namespace ABCOPENGL_VERSION_NS {
@@ -94,6 +95,9 @@ public:
     // This is a weird thing. Just makes the helper invalid
     // by nulling everything out. For internal use.
     void makeInvalid();
+    
+    // full path for color overrides
+    void setFullPath(const std::string &full_path){ m_full_path = full_path; }
 
 protected:
     void computeBounds();
@@ -114,6 +118,7 @@ protected:
     Box3d m_bounds;
 
     TriArray m_triangles;
+    std::string m_full_path;
 };
 
 } // End namespace ABCOPENGL_VERSION_NS

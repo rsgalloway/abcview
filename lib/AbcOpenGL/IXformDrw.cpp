@@ -74,6 +74,7 @@ IXformDrw::IXformDrw( IXform &iXform )
             m_maxTime = std::max( m_maxTime, maxTime );
         }
     }
+    m_fullName=m_xform.getFullName();    
 }
 
 //-*****************************************************************************
@@ -148,7 +149,11 @@ void IXformDrw::setTime( chrono_t iSeconds )
 void IXformDrw::draw( const DrawContext & iCtx )
 {
     if ( !valid() ) { return; }
-
+    float previous_color[4];
+    glGetFloatv(GL_CURRENT_COLOR,previous_color);
+    C3f cur_color = iCtx.getColorOverrides().color_override(m_fullName,
+            C3f(previous_color[0],previous_color[1],previous_color[2]));
+    glColor3f(cur_color[0],cur_color[1],cur_color[2]);
     M44d idenMatrix; // Defaults to identity.
     idenMatrix.makeIdentity();
     if ( m_localToParent.equalWithAbsError( idenMatrix, 1.0e-9 ) && m_inherits )
@@ -176,7 +181,9 @@ void IXformDrw::draw( const DrawContext & iCtx )
         M44d cameraLocal = iCtx.getWorldToCamera() * m_localToParent;
         glLoadMatrixd( ( const GLdouble * )&cameraLocal[0][0] );
     }
-
+    //Note all children will get same colour
+    //Do not pop back to previous colour
+    
     // Now draw.
     IObjectDrw::draw( iCtx );
 
