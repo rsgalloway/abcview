@@ -56,7 +56,8 @@ MainWindow::MainWindow()
 
 	QAction *fileOpenAction = new QAction("&Open", this);
 	QAction *fileQuitAction = new QAction("&Quit", this);
-	QAction *widgetsObjectsAction = new QAction("&Outliner", this);
+	QAction *widgetsObjectsAction = new QAction("&Objects", this);
+    QAction *widgetsPropertiesAction = new QAction("&Properties", this);
 	QAction *widgetsViewerAction = new QAction("&Viewer", this);
 
     QMenu *file = menuBar()->addMenu("&File");
@@ -65,11 +66,13 @@ MainWindow::MainWindow()
     file->addAction(fileOpenAction);
     file->addAction(fileQuitAction);
     widgets->addAction(widgetsObjectsAction);
+    widgets->addAction(widgetsPropertiesAction);
     widgets->addAction(widgetsViewerAction);
     
     connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(handleFileOpen()));
     connect(fileQuitAction, SIGNAL(triggered()), this, SLOT(handleFileQuit()));
     connect(widgetsObjectsAction, SIGNAL(triggered()), this, SLOT(addObjectsWidget()));
+    connect(widgetsPropertiesAction, SIGNAL(triggered()), this, SLOT(addPropertiesWidget()));
     connect(widgetsViewerAction, SIGNAL(triggered()), this, SLOT(addViewerWidget()));
 }
 
@@ -90,11 +93,20 @@ void MainWindow::handleFileQuit()
 
 void MainWindow::addObjectsWidget() 
 {
-	QDockWidget *dock = new QDockWidget("Outliner", this);
+	QDockWidget *dock = new QDockWidget("Objects", this);
 	OutlinerTreeWidget *objectTree = new OutlinerTreeWidget(dock);
 	dock->setWidget(objectTree);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
     objectTree->setState(getState());
+}
+
+void MainWindow::addPropertiesWidget() 
+{
+    QDockWidget *dock = new QDockWidget("Properties", this);
+    PropertyTreeWidget *propertyTree = new PropertyTreeWidget(dock);
+    dock->setWidget(propertyTree);
+    addDockWidget(Qt::LeftDockWidgetArea, dock);
+    propertyTree->setState(getState());
 }
 
 void MainWindow::addViewerWidget() 

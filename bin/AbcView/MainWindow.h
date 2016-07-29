@@ -52,13 +52,17 @@ public:
     explicit MainWindow();
     void addScene( const std::string &fileName );
     AbcView::GLState* getState() { return &m_state; };
-    void addObjectsWidget();
-    void addViewerWidget();
+
 
 private:
     AbcView::GLState m_state;
 
 signals:
+
+public slots:
+    void addObjectsWidget();
+    void addPropertiesWidget();
+    void addViewerWidget();
 
 private slots:
     void handleFileOpen();

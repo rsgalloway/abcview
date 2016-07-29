@@ -70,6 +70,10 @@ private:
     float m_radius;
     bool m_last_pok;
     bool m_rotating;
+    bool m_draw_grid;
+    int m_draw_mode;
+    bool m_visible_only;
+    bool m_bounds_only;
 
 signals:
 

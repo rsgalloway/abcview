@@ -192,5 +192,25 @@ void ObjectTreeWidgetItem::setScene( AbcOpenGL::SceneWrapper* scene )
     m_scene = scene;
 }
 
+PropertyTreeWidget::PropertyTreeWidget(QWidget *parent)
+{
+    setIconSize(QSize(20, 20));
+    setAllColumnsShowFocus(true);
+    setAnimated(false);
+    setAutoScroll(false);
+    setUniformRowHeights(true);
+    setSelectionMode(ExtendedSelection);
+    setDragDropMode(NoDragDrop);
+    setFocusPolicy(Qt::NoFocus);
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    setHeaderHidden(true);
+}
+
+void PropertyTreeWidget::setState( AbcView::GLState* state )
+{
+    m_state = state;
+}
+
+
 } // End namespace ABCVIEW_VERSION_NS
 } // End namespace AbcView

@@ -112,6 +112,24 @@ public slots:
 
 };
 
+class PropertyTreeWidget : public QTreeWidget
+{
+      Q_OBJECT
+
+public:
+    explicit PropertyTreeWidget(QWidget *parent = 0);
+    void setState( AbcView::GLState* state );
+    Alembic::Abc::ICompoundProperty getIProperty( QTreeWidgetItem *item );
+
+private:
+    AbcView::GLState* m_state;
+
+signals:
+
+public slots:
+
+};
+
 } // End namespace ABCVIEW_VERSION_NS
 
 using namespace ABCVIEW_VERSION_NS;

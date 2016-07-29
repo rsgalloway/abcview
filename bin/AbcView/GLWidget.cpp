@@ -153,6 +153,12 @@ void GLWidget::initializeGL()
     m_last_p3d = Imath::V3d(1.0, 0.0, 0.0);
     m_last_pok = false;
     m_rotating = false;
+
+    // drawing settings
+    m_draw_grid = false;
+    m_draw_mode = GL_FILL;
+    m_visible_only = true;
+    m_bounds_only = false;
 }
 
 void GLWidget::paintGL()
@@ -162,11 +168,19 @@ void GLWidget::paintGL()
     glLoadIdentity();
     m_camera.apply();
 
-    draw_grid();
+    if (m_draw_mode == 0)
+        return;
+
+    if (m_draw_grid)
+    {
+        draw_grid();
+    }
+
+    glPolygonMode(GL_FRONT_AND_BACK, m_draw_mode);
 
     for (int i=0; i<m_state->getScenes()->size(); i++)
     {
-        (*m_state->getScenes())[i].draw();
+        (*m_state->getScenes())[i].draw(m_visible_only, m_bounds_only);
     }
 }
 
@@ -214,10 +228,36 @@ void GLWidget::keyPressEvent(QKeyEvent *event)
     int key = event->key();
     Qt::KeyboardModifiers mod = event->modifiers();
 
-    if (key == Qt::Key_Right) {
+    if (key == Qt::Key_Right)
+    {
         stepForward();
-    } else if (key == Qt::Key_F) {
+    }
+    else if (key == Qt::Key_F)
+    {
         frame();
+    }
+    else if (key == Qt::Key_0)
+    {
+        m_draw_mode = 0;
+    }
+    else if (key == Qt::Key_1)
+    {
+        m_bounds_only = false;
+        m_draw_mode = GL_FILL;
+    }
+    else if (key == Qt::Key_2)
+    {
+        m_bounds_only = false;
+        m_draw_mode = GL_LINE;
+    }
+    else if (key == Qt::Key_3)
+    {
+        m_bounds_only = false;
+        m_draw_mode = GL_POINT;
+    }
+    else if (key == Qt::Key_4)
+    {
+        m_bounds_only = true;
     }
         
     m_camera.apply();
@@ -245,6 +285,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    if ( event->modifiers() != Qt::AltModifier )
+        return;
+
     Imath::V2d newPoint2D(event->pos().x(), event->pos().y());
     
     if ( ((newPoint2D.x < 0) || (newPoint2D.x > width()) ||
