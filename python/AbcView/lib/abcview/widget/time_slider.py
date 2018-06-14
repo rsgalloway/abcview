@@ -122,7 +122,7 @@ class Slider(QtGui.QSlider):
         # default text style
         qp.setPen(QtGui.QColor(155, 165, 155))
         qp.setFont(QtGui.QFont('Arial', 10))
-        
+
         rect_s = event.rect()
         rect_s.setY(2)
         sr = rect_s.getRect()
@@ -130,8 +130,8 @@ class Slider(QtGui.QSlider):
         opt = QtGui.QStyleOptionSlider()
         self.initStyleOption(opt)
         style = self.style()
-        handle = style.subControlRect(style.CC_Slider, opt, 
-                                      style.SC_SliderHandle, self) 
+        handle = style.subControlRect(style.CC_Slider, opt,
+                                      style.SC_SliderHandle, self)
         # slider position
         if self.__paint_slider_frame and self.length() > 0:
             rect_s = QtCore.QRect(sr[0], sr[1], sr[2], sr[3])
@@ -182,7 +182,7 @@ class TimeSlider(QtGui.QGroupBox):
         self.play_button.setObjectName("play_button")
         self.play_button.setFixedSize(50, 20)
         self.play_button.clicked.connect(self.handle_play)
-        
+
         # stop button
         self.stop_button = QtGui.QPushButton(self)
         self.stop_button.setObjectName("stop_button")
@@ -267,7 +267,7 @@ class TimeSlider(QtGui.QGroupBox):
         self.signal_frame_changed.emit(value)
 
     def handle_first_frame_changed(self):
-        value, ok = self.first_frame_label.text().toInt()
+        value = int(self.first_frame_label.text())
         if value <= self.__maximum:
             self.set_minimum(value)
             self.signal_first_frame_changed.emit(int(value))
@@ -275,7 +275,7 @@ class TimeSlider(QtGui.QGroupBox):
             self.set_minimum(self.__maximum)
 
     def handle_last_frame_changed(self):
-        value, ok = self.last_frame_label.text().toInt()
+        value = int(self.last_frame_label.text())
         if value >= self.__minimum:
             self.set_maximum(int(value))
             self.signal_last_frame_changed.emit(int(value))
